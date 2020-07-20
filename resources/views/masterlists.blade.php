@@ -34,7 +34,7 @@
                                     </td>
                                     <td>{{$user->email}}
                                     </td>
-                                    <td>{{$user->added_by->name}}
+                                    <td>
                                     </td>
                                     <td>{{$user->role}}
                                     </td>

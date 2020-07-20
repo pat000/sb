@@ -2,12 +2,28 @@
 
 namespace App\Http\Controllers;
 use App\Ordinance;
+use App\Category;
 use App\HistoryOrdinance;
 use Illuminate\Http\Request;
 
 class OrdinanceController extends Controller
 {
     //
+
+    public function index() {
+
+        $categories = Category::get();
+        $ordinances = Ordinance::with('added_by','history.added_by')->orderBy('created_at','desc')->get();
+        return view('ordinances',array(
+
+            'subheader' => 'Home',
+            'header' => 'Ordinances',
+            'categories' => $categories,
+            'ordinances' => $ordinances,
+            
+        ));
+
+    }
     public function new_ordinance (Request $request)
     {
         // dd($request->all());
@@ -17,12 +33,11 @@ class OrdinanceController extends Controller
         $ordinance->title = $request->title;
         $ordinance->date_approved = $request->date_approved;
         $ordinance->status = $request->status;
-        $ordinance->category = $request->category;
+        $ordinance->category_id = $request->category;
         $ordinance->remarks = $request->remarks;
 
         $ordinance->sponsor = $request->sponsor;
-        $ordinance->approver = $request->approver;
-
+        
         $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
         $name = time().'_'.$original_name;
         
@@ -58,9 +73,8 @@ class OrdinanceController extends Controller
         $ordinance->date_approved = $request->date_approved;
         $ordinance->status = $request->status;
         $ordinance->sponsor = $request->sponsor;
-        $ordinance->approver = $request->approver;
         
-        $ordinance->category = $request->category;
+        $ordinance->category_id = $request->category;
         $ordinance->remarks = $request->remarks;
         if($attachment)
         {
@@ -76,6 +90,20 @@ class OrdinanceController extends Controller
         
         $request->session()->flash('status','Successfully Changed.');
         return back(); 
+
+    }
+
+
+    public function delete_ordinance(request $request,  $id) {
+
+            $ordinance = Ordinance::find($id);
+
+            if ($ordinance) {
+                $ordinance->delete();
+
+                $request->session()->flash('status','Successfully Deleted.');
+                return back(); 
+            }
 
     }
 }

@@ -31,8 +31,8 @@
                        Status :
                        <select class='form-control'  name='status' required>
                            <option value=''></option>
-                           <option value='Approved' {{ ($ordinance->status == "Approved" ? "selected":"") }}>Approved</option>
-                        <option value='Disapproved' {{ ($ordinance->status == "Disapproved" ? "selected":"") }}>Disapproved</option>
+                           <option value=1 {{ ($ordinance->status ? "selected":"") }}>Implemented</option>
+                        <option value=0 {{ (!$ordinance->status ? "selected":"") }}>Not Implemented</option>
                        </select>
                     </div>
                     <div class='col-md-12'>
@@ -40,7 +40,7 @@
                        <select class='form-control'  name='category' required>
                            <option value=''></option>
                            @foreach($categories as $category)
-                           <option value='{{$category->name}}' {{($ordinance->category == $category->name ? "selected":"") }}>{{$category->name}}</option>
+                           <option value='{{$category->id}}' {{($ordinance->category->id == $category->id ? "selected":"") }}>{{$category->name}}</option>
                            @endforeach
                        </select>
                     </div>
@@ -58,10 +58,7 @@
                        Sponsored By:
                        <input class='form-control' type='text' name='sponsor' required value="{{$ordinance->sponsor}}">
                       </div>
-                      <div class='col-md-12'>
-                       Approved By:
-                       <input class='form-control' type='text' name='approver' required value="{{$ordinance->approve}}">
-                      </div>
+                      
                    
                 </div>
                 <div class="modal-footer">

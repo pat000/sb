@@ -35,6 +35,8 @@
     
     <link href="{{ asset('bootstrap/css/plugins/jasny/jasny-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bootstrap/css/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('bootstrap/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
     
     <style>
         input::-webkit-outer-spin-button,
@@ -88,11 +90,22 @@
                             </ul>
                         </div>
                         <div class="logo-element">
-                            {{ config('app.name', 'Laravel') }}
+                            <img alt="image" class="rounded-circle" style='width:48px;height:48px;' src="{{asset('images/front-logo.png')}}"/>
                         </div>
                     </li>
                     <li @if($header == 'Home') class='active' @endif>
                         <a href="{{ url('/') }}" class='active' onclick='show()' ><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> </a>
+                    </li>
+                    <li @if($header == 'Ordinances') class='active' @endif>
+                        <a href="{{ url('/ordinances') }}" class='active' onclick='show()' ><i class="fa fa-balance-scale "></i> <span class="nav-label">Ordinances</span> </a>
+                    </li>
+
+                    <li @if($header == 'Legalizations') class='active' @endif>
+                        <a href="{{ url('/legalizations') }}" class='active' onclick='show()' ><i class="fa fa-legal "></i> <span class="nav-label">Legalizations</span> </a>
+                    </li>
+
+                     <li @if($header == 'Motorized') class='active' @endif>
+                        <a href="{{ url('/motorized') }}" class='active' onclick='show()' ><i class="fa fa-motorcycle "></i> <span class="nav-label">Motorized</span> </a>
                     </li>
                     @if(auth()->user()->role == "Admin")
                     <li @if($header == 'Settings') class='active' @endif>
@@ -241,62 +254,11 @@
                 
                 <script src="{{ asset('bootstrap/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
                 <script>
-                    var ordinance_table = $('.dataTables-example').DataTable({
-                            lengthMenu: [[10, 25, 50,-1], [10, 25, 50,"All"]],
-                            // pageLength: -1,
-                            scrollY:        true,
-                            responsive: true,
-                            searching: true,
-                            ordering: false,
-                     
-                            dom: "<'html5buttons'B>Tg <'footer'<'row' <'col-sm-4 col-xs-12'l> <'col-sm-4 col-xs-12'i><'col-xs-12 col-sm-4 float-right'p>>>",
-                            
-                            buttons: [
-                            // { extend: 'copy'},
-                            {extend: 'csv'},
-                            {extend: 'excel', title: 'ExampleFile'},
-                            {extend: 'pdf', title: 'ExampleFile'},
-                            
-                            {
-                                extend: 'print',
-                                exportOptions: {
-                                    columns: [ 2, 0, 1 ,6]
-                                },
-                                customize: function (win)
-                                {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).css('margin', '20px');
-                                    
-                                    $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                                }
-                            }]
-                            
-                        });
-
-                    $('#txtorno').on( 'keyup', function () {
-                        ordinance_table.column(0).search( this.value ).draw();
-                    });
-                    $('#txttitle').on( 'keyup', function () {
-                        ordinance_table.column(1).search( this.value ).draw();
-                    });
-                    $('#txtdate').on( 'keyup', function () {
-                        ordinance_table.column(2).search( this.value ).draw();
-                    });
-
-                    $('#txtstatus').on( 'change', function () {
-                        ordinance_table.column(3).search( this.value ).draw();
-                    })
-                    $('#txtcategory').on( 'change', function () {
-                        ordinance_table.column(4).search( this.value ).draw();
-                    });
-
-                    $('#txtsponsor').on( 'keyup', function () {
-                        ordinance_table.column(6).search( this.value ).draw();
-                    });
+                    
                 </script>
+
+
+                   @yield('js-custom')
             </body>
             </html>
             

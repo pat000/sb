@@ -1,10 +1,10 @@
 
-<div class="modal fade" id="new_ordinance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit_legalization{{$legalization->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class='col-md-10'>
-                    <h5 class="modal-title" id="exampleModalLabel">New Ordinance</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Legalization</h5>
                 </div>
                 <div class='col-md-2'>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
@@ -12,28 +12,27 @@
                     </button>
                 </div>
             </div>
-            <form method='POST' action='new-ordinance' onsubmit='show();'  enctype="multipart/form-data" >
+            <form method='POST' action='edit-legalization/{{$legalization->id}}' onsubmit='show();'  enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <div class='col-md-12'>
-                       Ordinance No.:
-                       <input class='form-control' type='text' name='ordinance_number' required>
-                    </div>
-                    <div class='col-md-12'>
-                       Date Approved:
-                       <input class='form-control' type='date' name='date_approved' >
+                       Legalization No.:
+                       <input class='form-control' value='{{$legalization->legalization_number}}' type='text' name='legalization_number' required>
                     </div>
                     <div class='col-md-12'>
                        Title:
-                       <input class='form-control' type='text' name='title' required>
+                       <input class='form-control' value='{{$legalization->title}}'  type='text' name='title' required>
                     </div>
-                    
+                    <div class='col-md-12'>
+                       Date Approved:
+                       <input class='form-control' value='{{$legalization->date_approved}}'  type='date' name='date_approved' >
+                    </div>
                     <div class='col-md-12'>
                        Status :
                        <select class='form-control'  name='status' required>
                            <option value=''></option>
-                           <option value=1>Implemented</option>
-                        <option value=0>Not Implemented</option>
+                           <option value=1 {{ ($legalization->status ? "selected":"") }}>Implemented</option>
+                        <option value=0 {{ (!$legalization->status ? "selected":"") }}>Not Implemented</option>
                        </select>
                     </div>
                     <div class='col-md-12'>
@@ -41,24 +40,21 @@
                        <select class='form-control'  name='category' required>
                            <option value=''></option>
                            @foreach($categories as $category)
-                           <option value='{{$category->id}}'>{{$category->name}}</option>
+                           <option value='{{$category->id}}' {{($legalization->category->id == $category->id ? "selected":"") }}>{{$category->name}}</option>
                            @endforeach
                        </select>
                     </div>
-
+                
                     <div class='col-md-12'>
-                     Sponsored By:
-                     <input class='form-control' type='text' name='sponsor' required>
-                    </div>
-                   
-                    <div class='col-md-12'>
-                        File:
-                        <input class='form-control' type='file' name='attachment' required>
+                        Change File (current file : <a href='{{url($legalization->uploaded_file)}}' target='_blank'>Download File </a>  ):
+                        <input class='form-control' type='file' name='attachment' >
                      </div>
-                    <div class='col-md-12'>
-                        Remarks:
-                        <textarea class='form-control' type='file' name='remarks' ></textarea>
-                     </div>
+                  
+                     <div class='col-md-12'>
+                       Sponsored By:
+                       <input class='form-control' type='text' name='sponsor' required value="{{$legalization->sponsor}}">
+                      </div>
+                      
                    
                 </div>
                 <div class="modal-footer">
