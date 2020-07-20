@@ -45,6 +45,7 @@
                                             <td>
                                                 <select class="form-control" id="txtstatus">
                                                     <option disabled="" selected="">-- Select status</option>
+
                                                     <option >Implemented</option>
                                                     <option >Not Implemented</option>
                                                 </select>
@@ -79,7 +80,18 @@
                                             <td > {{$ordinance->ordinance_number}} </td>
                                             <td width="500px"> <strong>{{$ordinance->title}}</strong></td>
                                             <td >{{date("M d, Y",strtotime($ordinance->date_approved))}}</td>
-                                            <td >  @if ($ordinance->status) <span class="label label-primary">Implemented</span> @else <span class="label label-default">Not Implemented</span> @endif</td>
+                                            <td >  
+                                                @if ($ordinance->status == 1) 
+                                                    <span class="label label-primary">Implemented</span> 
+                                                @elseif ($ordinance->status == 2) 
+                                                    <span class="label label-success">Approved</span> 
+                                                @elseif ($ordinance->status == 3) 
+                                                    <span class="label label-warning">Disapproved</span> 
+                                                @else 
+                                                    <span class="label label-default">Not Implemented</span> 
+                                                @endif
+
+                                            </td>
                                             <td > {{$ordinance->category->name}}</td>
                                             <td > 
 

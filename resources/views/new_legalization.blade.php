@@ -32,8 +32,10 @@
                        Status :
                        <select class='form-control'  name='status' required>
                            <option value=''></option>
-                           <option value=1>Implemented</option>
-                        <option value=0>Not Implemented</option>
+                            <option value=1>Implemented</option>
+                            <option value=0>Not Implemented</option>
+                            <option value="2">Approved</option>
+                            <option value="3">Disapproved</option>
                        </select>
                     </div>
                     <div class='col-md-12'>

@@ -31,8 +31,10 @@
                        Status :
                        <select class='form-control'  name='status' required>
                            <option value=''></option>
-                           <option value=1 {{ ($legalization->status ? "selected":"") }}>Implemented</option>
-                        <option value=0 {{ (!$legalization->status ? "selected":"") }}>Not Implemented</option>
+                           <option value=1 {{ ($legalization->status ==1 ? "selected":"") }}>Implemented</option>
+                        <option value=0 {{ ( $legalization->status == 0? "selected":"") }}>Not Implemented</option>
+                        <option value=2 {{ ( $legalization->status == 2? "selected":"") }}>Approved</option>
+                        <option value=3 {{ ( $legalization->status == 3? "selected":"") }}>Disapproved</option>
                        </select>
                     </div>
                     <div class='col-md-12'>

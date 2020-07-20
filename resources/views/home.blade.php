@@ -106,10 +106,10 @@
 
         
                var ordinanceData = {
-                    labels: ["Implemented","Not Implemented"],
+                    labels: ["Implemented","Not Implemented" , 'Approved'  , 'Disapproved'],
                     datasets: [{
-                        data: [{{$data['imp_ordinances']}},{{$data['not_imp_ordinances']}}],
-                        backgroundColor: ["#a3e1d4","#dedede"]
+                        data: [{{$data['imp_ordinances']}},{{$data['not_imp_ordinances']}} ,{{$data['approved_ordinances']}} ,{{$data['not_approved_ordinances']}}],
+                        backgroundColor: ["#a3e1d4","#dedede" , '#0059ff'  , '#4c4c4c']
                     }]
                 } ;
 
@@ -123,10 +123,10 @@
 
 
                  var legalizationData = {
-                    labels: ["Implemented","Not Implemented"],
+                    labels: ["Implemented","Not Implemented" , 'Approved'  , 'Disapproved'],
                     datasets: [{
-                        data: [{{$data['imp_legalizations']}},{{$data['not_imp_legalizations']}}],
-                        backgroundColor: ["#a3e1d4","#dedede"]
+                        data: [{{$data['imp_legalizations']}},{{$data['not_imp_legalizations']}} ,{{$data['approved_legalizations']}} ,{{$data['not_approved_legalizations']}}],
+                        backgroundColor: ["#a3e1d4","#dedede" , '#0059ff'  , '#4c4c4c']
                     }]
                 } ;
 

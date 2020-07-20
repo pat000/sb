@@ -40,10 +40,14 @@ class HomeController extends Controller
         $data['total_ordinance']  = count($ordinances); 
         $data['imp_ordinances'] = Ordinance::where('status' , 1)->count();
         $data['not_imp_ordinances'] = Ordinance::where('status' , 0)->count();
+        $data['approved_ordinances'] = Ordinance::where('status' , 2)->count();
+        $data['not_approved_ordinances'] = Ordinance::where('status' , 3)->count();
 
         $data['total_legalization']  = count($legalizations); 
         $data['imp_legalizations'] = Legalization::where('status' , 1)->count();
         $data['not_imp_legalizations'] = Legalization::where('status' , 0)->count();
+        $data['approved_legalizations'] = Legalization::where('status' , 2)->count();
+        $data['not_approved_legalizations'] = Legalization::where('status' , 3)->count();
 
         $data['total_motorized'] = count($motorized);
         return view('home',array(

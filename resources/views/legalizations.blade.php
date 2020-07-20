@@ -79,7 +79,17 @@
                                             <td > {{$legalization->legalization_number}} </td>
                                             <td width="500px"> <strong>{{$legalization->title}}</strong></td>
                                             <td >{{date("M d, Y",strtotime($legalization->date_approved))}}</td>
-                                            <td >  @if ($legalization->status) <span class="label label-primary">Implemented</span> @else <span class="label label-default">Not Implemented</span> @endif</td>
+                                            <td >  
+                                                @if ($legalization->status == 1) 
+                                                    <span class="label label-primary">Implemented</span> 
+                                                @elseif ($legalization->status == 2) 
+                                                    <span class="label label-success">Approved</span> 
+                                                @elseif ($legalization->status == 3) 
+                                                    <span class="label label-warning">Disapproved</span> 
+                                                @else 
+                                                    <span class="label label-default">Not Implemented</span> 
+                                                @endif
+                                            </td>
                                             <td > {{$legalization->category->name}}</td>
                                             <td > 
 
