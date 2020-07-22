@@ -66,6 +66,23 @@
                 max-width:1400px;
             }
         }
+
+        .modal-body {
+            background: linear-gradient(141deg, #1ab394 0%, #27c2d4 51%);
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .modal-body label {
+            color: white;
+            font-weight: 600;
+        }
+
+
+        .form-control, .single-line {;
+            box-shadow: 1px 5px 2px 0px #88888859;
+        }
     </style>
 </head>
 <body >
@@ -100,12 +117,12 @@
                         <a href="{{ url('/ordinances') }}" class='active' onclick='show()' ><i class="fa fa-balance-scale "></i> <span class="nav-label">Ordinances</span> </a>
                     </li>
 
-                    <li @if($header == 'Legalizations') class='active' @endif>
-                        <a href="{{ url('/legalizations') }}" class='active' onclick='show()' ><i class="fa fa-legal "></i> <span class="nav-label">Legalizations</span> </a>
+                    <li @if($header == 'Resolutions') class='active' @endif>
+                        <a href="{{ url('/resolutions') }}" class='active' onclick='show()' ><i class="fa fa-legal "></i> <span class="nav-label">Resolutions</span> </a>
                     </li>
 
-                     <li @if($header == 'Motorized') class='active' @endif>
-                        <a href="{{ url('/motorized') }}" class='active' onclick='show()' ><i class="fa fa-motorcycle "></i> <span class="nav-label">Motorized</span> </a>
+                     <li @if($header == 'Legalization') class='active' @endif>
+                        <a href="{{ url('/motorized') }}" class='active' onclick='show()' ><i class="fa fa-motorcycle "></i> <span class="nav-label">Legalizations</span> </a>
                     </li>
                     @if(auth()->user()->role == "Admin")
                     <li @if($header == 'Settings') class='active' @endif>

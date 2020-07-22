@@ -3,59 +3,64 @@
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class='col-md-10'>
-                    <h5 class="modal-title" id="exampleModalLabel">New legalization</h5>
-                </div>
-                <div class='col-md-2'>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <h2  id="exampleModalLabel">New resolution</h2>
+                
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close" >
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                
             </div>
-            <form method='POST' action='new-legalization' onsubmit='show();'  enctype="multipart/form-data" >
+            <form method='POST' action='new-resolution' onsubmit='show();'  enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
-                    <div class='col-md-12'>
-                       legalization No.:
+                    <div class='col-md-12 form-group'>
+                       
+                      <label>Resolution No.:</label>
                        <input class='form-control' type='text' name='legalization_number' required>
                     </div>
-                    <div class='col-md-12'>
-                       Date Approved:
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Date Approved:</label>
                        <input class='form-control' type='date' name='date_approved' >
                     </div>
-                    <div class='col-md-12'>
-                       Title:
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Title:</label>
                        <input class='form-control' type='text' name='title' required>
                     </div>
                     
-                    <div class='col-md-12'>
-                       Status :
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Status :</label>
                        <select class='form-control'  name='status' required>
-                           <option value=''></option>
+                           <option value=''> -- Select status</option>
                             <option value=1>Implemented</option>
                             <option value=0>Not Implemented</option>
                             <option value="2">Approved</option>
                             <option value="3">Disapproved</option>
                        </select>
                     </div>
-                    <div class='col-md-12'>
-                       Category :
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Category :</label>
                        <select class='form-control'  name='category' required>
-                           <option value=''></option>
+                           <option value=''>-- Select category</option>
                            @foreach($categories as $category)
                            <option value='{{$category->id}}'>{{$category->name}}</option>
                            @endforeach
                        </select>
                     </div>
 
-                    <div class='col-md-12'>
-                     Sponsored By:
+                    <div class='col-md-12 form-group'>
+                     
+                     <label>Sponsored By:</label>
                      <input class='form-control' type='text' name='sponsor' required>
                     </div>
                    
-                    <div class='col-md-12'>
-                        File:
-                        <input class='form-control' type='file' name='attachment' required>
+                     <div class='col-md-12 form-group'>
+                        
+                        <label>Files (Multiple files):</label>
+                        <input class='form-control' type='file' name='attachment[]' multiple="" required>
                      </div>
                   
                 </div>

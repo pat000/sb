@@ -18,21 +18,20 @@ class LegalizationController extends Controller
         //
 
         $categories = Category::get();
-        $legalizations = Legalization::orderBy('created_at','desc')->get();
+        $resolutions = Legalization::orderBy('created_at','desc')->get();
         return view('legalizations',array(
 
             'subheader' => 'Home',
-            'header' => 'Legalizations',
+            'header' => 'Resolutions',
             'categories' => $categories,
-            'legalizations' => $legalizations,
+            'resolutions' => $resolutions,
             
         ));
     }
 
      public function new_legalization (Request $request)
     {
-        // dd($request->all());
-        $attachment = $request->attachment;
+        
         $legalization = new Legalization;
         $legalization->legalization_number = $request->legalization_number;
         $legalization->title = $request->title;
@@ -42,14 +41,34 @@ class LegalizationController extends Controller
 
         $legalization->sponsor = $request->sponsor;
         
-        $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
-        $name = time().'_'.$original_name;
-        
-        $attachment->move(public_path().'/attachments/', $name);
-        $file_name = '/attachments/'.$name;
-        $ext = pathinfo(storage_path().$file_name, PATHINFO_EXTENSION);
+        $attachments = $request->attachment;
+        if($attachments)
+        {   
+            $uniqid = uniqid();
+            $attachment_path = public_path().'/attachments/';
+            $attachment_folder = $attachment_path.$uniqid;
 
-        $legalization->uploaded_file  = $file_name ;
+            $file_names = [];
+            $file_names['attachment_folder'] = $uniqid;
+
+            foreach ($attachments as $attachment) {
+                
+                $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
+                $name = time().'_'.$original_name;
+
+                if ( !file_exists($attachment_folder))
+                {
+                    \File::makeDirectory($attachment_folder , 0777 , true);
+                }
+
+                $attachment->move($attachment_folder, $name);
+                $file_names['files'][] = $name;
+
+            }
+
+            $legalization->uploaded_file  = serialize($file_names) ;
+        }
+
         $legalization->uploaded_by  = auth()->user()->id ;
         $legalization->save();
 
@@ -62,7 +81,6 @@ class LegalizationController extends Controller
     {
         $legalization = Legalization::findOrfail($id);
         
-        $attachment = $request->attachment;
         $legalization->legalization_number = $request->legalization_number;
         $legalization->title = $request->title;
         $legalization->date_approved = $request->date_approved;
@@ -70,15 +88,41 @@ class LegalizationController extends Controller
         $legalization->sponsor = $request->sponsor;
         
         $legalization->category_id = $request->category;
-        if($attachment)
-        {
-        $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
-        $name = time().'_'.$original_name;
-        $attachment->move(public_path().'/attachments/', $name);
-        $file_name = '/attachments/'.$name;
-        $ext = pathinfo(storage_path().$file_name, PATHINFO_EXTENSION);
-        $legalization->uploaded_file  = $file_name ;
+        
+        $attachments = $request->attachment;
+        if($attachments)
+        {   
+            $uniqid = ($request->attachment_folder)  ? $request->attachment_folder : uniqid();
+            $attachment_path = config('app.attachment_path');
+            $attachment_folder = $attachment_path.$uniqid;
+
+            $file_names = [];
+            $file_names['attachment_folder'] = $uniqid;
+
+            $old_files = @unserialize($legalization->uploaded_file);
+            $old_files = $old_files['files'];
+            
+            foreach ($attachments as $attachment) {
+                
+                $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
+                $name = time().'_'.$original_name;
+
+                if ( !file_exists($attachment_folder))
+                {
+                    \File::makeDirectory($attachment_folder , 0777 , true);
+                }
+
+                $attachment->move($attachment_folder, $name);
+                array_push($old_files, $name);
+
+            }
+            
+            $file_names['files'] = $old_files;
+            $legalization->uploaded_file  = serialize($file_names) ;
+            
         }
+
+
         $legalization->uploaded_by  = auth()->user()->id ;
         $legalization->save();
         
@@ -158,6 +202,38 @@ class LegalizationController extends Controller
 
             $request->session()->flash('status','Successfully Deleted.');
             return back(); 
+        }
+    }
+
+    public function delete_leg_file (Request $request , $id , $filename)
+    {
+        $legalization = Legalization::find($id);
+
+        if ($legalization) {
+            
+            $attachments = unserialize($legalization->uploaded_file);
+            $folder = $attachments['attachment_folder'];
+            $files = $attachments['files'];
+
+            foreach ($files as $file) {
+                if ($file == $filename) {
+
+                    \File::delete(config('app.attachment_path').'/'.$folder.'/'. $filename);
+
+                    $key = array_search($filename, $attachments['files']);
+                    
+                    unset ($attachments['files'][$key]);
+
+                    $serailize_data = serialize($attachments);
+
+                    $legalization->uploaded_file = $serailize_data;
+                    $legalization->save();
+
+                    $request->session()->flash('status',$legalization->title .' Successfully attachment deleted  .');
+
+                    return back();
+                }
+            }
         }
     }
 }

@@ -18,11 +18,11 @@
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title pb-3">
-                    <h5>Legalization</h5>
+                    <h5>resolution</h5>
                     <div class="ibox-tools">
                         
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary" data-target="#new_legalization" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Legalization</button>
+                            <button class="btn btn-primary" data-target="#new_legalization" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New resolution</button>
                         </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -39,7 +39,7 @@
                                 <table id='' class="table table-striped table-bordered table-hover dataTables-example mb-5" >
                                     <thead>
                                         <tr>
-                                            <td><input type="text" name="" id="txtorno" class="form-control" placeholder="Legalization No."></td>
+                                            <td><input type="text" name="" id="txtorno" class="form-control" placeholder="Resolution No."></td>
                                             <td><input type="text" name="" id="txttitle" class="form-control" placeholder="Title"></td>
                                             <td><input type="text" name="" id="txtdate" class="form-control" placeholder="Date Approved"></td>
                                             <td>
@@ -60,7 +60,7 @@
                                             <td colspan="4"><input type="text" name="" id="txtsponsor" class="form-control" placeholder="Sponsor"></td>
                                         </tr>
                                         <tr>
-                                            <th > Legalization No. </th>
+                                            <th > Resolution No. </th>
                                             <th width="500px"> Title</th>
                                             <th > Date Approved</th>
                                             <th > Status</th>
@@ -73,36 +73,43 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($legalizations as $legalization)
+                                        @foreach($resolutions as $resolution)
+
+                                        @php
+                                            $attachment_arr = @unserialize($resolution->uploaded_file);
+
+                                            $folder = $attachment_arr['attachment_folder'];
+                                            $files = $attachment_arr['files'];
+                                        @endphp
 
                                         <tr >
-                                            <td > {{$legalization->legalization_number}} </td>
-                                            <td width="500px"> <strong>{{$legalization->title}}</strong></td>
-                                            <td >{{date("M d, Y",strtotime($legalization->date_approved))}}</td>
+                                            <td > {{$resolution->legalization_number}} </td>
+                                            <td width="500px"> <strong>{{$resolution->title}}</strong></td>
+                                            <td >{{date("M d, Y",strtotime($resolution->date_approved))}}</td>
                                             <td >  
-                                                @if ($legalization->status == 1) 
+                                                @if ($resolution->status == 1) 
                                                     <span class="label label-primary">Implemented</span> 
-                                                @elseif ($legalization->status == 2) 
+                                                @elseif ($resolution->status == 2) 
                                                     <span class="label label-success">Approved</span> 
-                                                @elseif ($legalization->status == 3) 
-                                                    <span class="label label-warning">Disapproved</span> 
+                                                @elseif ($resolution->status == 3) 
+                                                    <span class="label label-danger">Disapproved</span> 
                                                 @else 
                                                     <span class="label label-default">Not Implemented</span> 
                                                 @endif
                                             </td>
-                                            <td > {{$legalization->category->name}}</td>
+                                            <td > {{$resolution->category->name}}</td>
                                             <td > 
 
-                                            <a  href='{{url($legalization->uploaded_file)}}' target='_blank'  class="btn btn-white btn-sm"><i class="fa fa-download"></i> Download File </a>
+                                            <a  data-target="#edit_resolution{{$resolution->id}}" data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> {{ (count($files) == 0 ? 'No' : count($files) )}} File (s) </a>
                                              
-                                            <td> {{ $legalization->sponsor }}</td>
-                                            <td hidden=""> {{$legalization->remarks}}</td>
-                                            <td hidden="">{{$legalization->added_by->name}}</td>
+                                            <td> {{ $resolution->sponsor }}</td>
+                                            <td hidden=""> {{$resolution->remarks}}</td>
+                                            <td hidden="">{{$resolution->added_by->name}}</td>
                                             <td width="200px">    
 
-                                                <a onclick='' data-target="#edit_legalization{{$legalization->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a onclick='' data-target="#edit_resolution{{$resolution->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
 
-                                                <a href="delete-legalization/{{$legalization->id}}" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>
+                                                <a href="delete-legalization/{{$resolution->id}}" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>
 
                                                 
                                             </td>
@@ -156,20 +163,44 @@
                             {
                                 extend: 'print',
                                 exportOptions: {
-                                    columns: [ 0, 2, 1 ,6]
+                                    columns: [ 0, 2, 1 ,3, 4, 6]
                                 },
-                                title : '{{config('app.name')}} - legalizations',
+                                title : '{{config('app.name')}} - Resolutions',
                                 
                                 customize: function (win)
                                 {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).css('margin', '20px');
+                                    $(win.document.body).css('margin', '10px');
 
                     
                                     $(win.document.body).find('table')
                                     .addClass('compact')
                                     .css('font-size', 'inherit');
+
+
+                                    var last = null;
+                                    var current = null;
+                                    var bod = [];
+                     
+                                    var css = '@page { size: landscape; }',
+                                        head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                        style = win.document.createElement('style');
+                     
+                                    style.type = 'text/css';
+                                    style.media = 'print';
+                     
+                                    if (style.styleSheet)
+                                    {
+                                      style.styleSheet.cssText = css;
+                                    }
+                                    else
+                                    {
+                                      style.appendChild(win.document.createTextNode(css));
+                                    }
+                     
+                                    head.appendChild(style);
+
                                 }
                             }]
                             

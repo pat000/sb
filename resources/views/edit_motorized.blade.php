@@ -3,14 +3,12 @@
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class='col-md-10'>
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Motorized</h5>
-                </div>
-                <div class='col-md-2'>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <h2 class="modal-title" id="exampleModalLabel">Edit Legalization</h2>
+                
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close" >
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                
             </div>
             <form method='POST' action="{{ route('motorized.update' , $motor_info->id)}}" onsubmit='show();'  >
                 <div class="modal-body">

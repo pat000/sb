@@ -26,8 +26,6 @@ class OrdinanceController extends Controller
     }
     public function new_ordinance (Request $request)
     {
-        // dd($request->all());
-        $attachment = $request->attachment;
         $ordinance = new Ordinance;
         $ordinance->ordinance_number = $request->ordinance_number;
         $ordinance->title = $request->title;
@@ -38,14 +36,34 @@ class OrdinanceController extends Controller
 
         $ordinance->sponsor = $request->sponsor;
         
-        $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
-        $name = time().'_'.$original_name;
-        
-        $attachment->move(public_path().'/attachments/', $name);
-        $file_name = '/attachments/'.$name;
-        $ext = pathinfo(storage_path().$file_name, PATHINFO_EXTENSION);
+        $attachments = $request->attachment;
+        if($attachments)
+        {   
+            $uniqid = uniqid();
+            $attachment_path = public_path().'/attachments/';
+            $attachment_folder = $attachment_path.$uniqid;
 
-        $ordinance->uploaded_file  = $file_name ;
+            $file_names = [];
+            $file_names['attachment_folder'] = $uniqid;
+
+            foreach ($attachments as $attachment) {
+                
+                $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
+                $name = time().'_'.$original_name;
+
+                if ( !file_exists($attachment_folder))
+                {
+                    \File::makeDirectory($attachment_folder , 0777 , true);
+                }
+
+                $attachment->move($attachment_folder, $name);
+                $file_names['files'][] = $name;
+
+            }
+
+            $ordinance->uploaded_file  = serialize($file_names) ;
+        }
+
         $ordinance->uploaded_by  = auth()->user()->id ;
         $ordinance->save();
 
@@ -67,7 +85,6 @@ class OrdinanceController extends Controller
         $history_ordinance->uploaded_by = $ordinance->uploaded_by;
         $history_ordinance->save();
 
-        $attachment = $request->attachment;
         $ordinance->ordinance_number = $request->ordinance_number;
         $ordinance->title = $request->title;
         $ordinance->date_approved = $request->date_approved;
@@ -76,15 +93,40 @@ class OrdinanceController extends Controller
         
         $ordinance->category_id = $request->category;
         $ordinance->remarks = $request->remarks;
-        if($attachment)
-        {
-        $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
-        $name = time().'_'.$original_name;
-        $attachment->move(public_path().'/attachments/', $name);
-        $file_name = '/attachments/'.$name;
-        $ext = pathinfo(storage_path().$file_name, PATHINFO_EXTENSION);
-        $ordinance->uploaded_file  = $file_name ;
+        
+        $attachments = $request->attachment;
+        if($attachments)
+        {   
+            $uniqid = ($request->attachment_folder)  ? $request->attachment_folder : uniqid();
+            $attachment_path = config('app.attachment_path');
+            $attachment_folder = $attachment_path.$uniqid;
+
+            $file_names = [];
+            $file_names['attachment_folder'] = $uniqid;
+
+            $old_files = @unserialize($ordinance->uploaded_file);
+            $old_files = $old_files['files'];
+            
+            foreach ($attachments as $attachment) {
+                
+                $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
+                $name = time().'_'.$original_name;
+
+                if ( !file_exists($attachment_folder))
+                {
+                    \File::makeDirectory($attachment_folder , 0777 , true);
+                }
+
+                $attachment->move($attachment_folder, $name);
+                array_push($old_files, $name);
+
+            }
+            
+            $file_names['files'] = $old_files;
+            $ordinance->uploaded_file  = serialize($file_names) ;
+            
         }
+
         $ordinance->uploaded_by  = auth()->user()->id ;
         $ordinance->save();
         
@@ -100,10 +142,44 @@ class OrdinanceController extends Controller
 
             if ($ordinance) {
                 $ordinance->delete();
-
+                
                 $request->session()->flash('status','Successfully Deleted.');
                 return back(); 
             }
 
     }
+
+    public function delete_or_file (Request $request , $id , $filename)
+    {
+        $ordinance = Ordinance::find($id);
+
+        if ($ordinance) {
+            
+            $attachments = unserialize($ordinance->uploaded_file);
+            $folder = $attachments['attachment_folder'];
+            $files = $attachments['files'];
+
+            foreach ($files as $file) {
+                if ($file == $filename) {
+
+                    \File::delete(config('app.attachment_path').'/'.$folder.'/'. $filename);
+
+                    $key = array_search($filename, $attachments['files']);
+                    
+                    unset ($attachments['files'][$key]);
+
+                    $serailize_data = serialize($attachments);
+
+                    $ordinance->uploaded_file = $serailize_data;
+                    $ordinance->save();
+
+                    $request->session()->flash('status',$ordinance->title .' Successfully attachment deleted  .');
+
+                    return back();
+                }
+            }
+        }
+    }
+
+
 }

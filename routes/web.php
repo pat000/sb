@@ -37,11 +37,17 @@ Route::group( ['middleware' => 'auth'], function() {
 	Route::post('edit-ordinance/{id}','OrdinanceController@edit_ordinance');
 	Route::get('delete-ordinance/{id}','OrdinanceController@delete_ordinance');
 
+	Route::get('delete-ordinance-file/{id}/{filename}','OrdinanceController@delete_or_file')->name('delete_or_file');
+
+
 	// Legalizations
-	Route::get('legalizations','LegalizationController@index');
-	Route::post('new-legalization','LegalizationController@new_legalization');
-	Route::post('edit-legalization/{id}','LegalizationController@edit_legalization');
-	Route::get('delete-legalization/{id}','LegalizationController@delete_legalization');
+	Route::get('resolutions','LegalizationController@index');
+	Route::post('new-resolution','LegalizationController@new_legalization');
+	Route::post('edit-resolution/{id}','LegalizationController@edit_legalization');
+	Route::get('delete-resolution/{id}','LegalizationController@delete_legalization');
+
+	Route::get('delete-legalization-file/{id}/{filename}','LegalizationController@delete_leg_file')->name('delete_leg_file');
+
 
 
 	// Motorized

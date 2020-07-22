@@ -5,7 +5,7 @@
 @section('content')
 
 @if(session()->has('status'))
-<div class="alert alert-success alert-dismissable">
+<div class="alert alert-success alert-dismissable mt-2">
     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
     {{session()->get('status')}}
 </div>
@@ -18,11 +18,11 @@
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title pb-3">
-                    <h5>Motorized</h5>
+                    <h5>Legalization</h5>
                     <div class="ibox-tools">
                         
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <button class="btn btn-primary" data-target="#new_motorized" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Motorized</button>
+                            <button class="btn btn-primary" data-target="#new_motorized" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Legalization</button>
                         </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -57,7 +57,7 @@
                                             <th width="500px"> Operator Informations</th>
                                             <th width="300px"> Vehicle Informations</th>
                                             <th > Date Issued</th>
-                                            
+                                            <th>Status</th>
                                             <th width="200px"> Action</th>
                                         </tr>
                                     </thead>
@@ -79,7 +79,15 @@
                                             </td>
 
                                             <td >{{date("M d, Y",strtotime($motor_info->date_issued))}}</td>
-                                             
+                                            
+                                            @php
+                                                $date_now = \Carbon\Carbon::now();
+                                                $date_issue = \Carbon\Carbon::parse($motor_info->date_issued);
+
+                                                $data_status = $date_now->diffInYears($date_issue);
+                                            @endphp
+                                            <td><span class="label {{($data_status >= 3) ? 'label-danger' : 'label-success'}}"> {{($data_status >= 3) ? 'Expired' : 'Good'}}</span></ntd>
+
                                             <td width="200px">    
 
                                                 <a onclick='' data-target="#edit_motorized{{$motor_info->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>

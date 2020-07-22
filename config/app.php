@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    'attachment_path' => public_path().'/attachments/',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

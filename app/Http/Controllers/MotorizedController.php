@@ -19,7 +19,7 @@ class MotorizedController extends Controller
         return view('motorized',array(
 
             'subheader' => 'Home',
-            'header' => 'Motorized',
+            'header' => 'Legalization',
             'motorized' => $motorized,
             
         ));
@@ -122,7 +122,7 @@ class MotorizedController extends Controller
             $motorized->save();
 
 
-            $request->session()->flash('status','Successfully Added.');
+            $request->session()->flash('status','Data for '.$motorized->operator_name.' Successfully Updated.');
             return back(); 
 
         } else  

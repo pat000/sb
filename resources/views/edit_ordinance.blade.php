@@ -3,32 +3,34 @@
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class='col-md-10'>
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Ordinance</h5>
-                </div>
-                <div class='col-md-2'>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <h2  id="exampleModalLabel">Edit Ordinance</h2>
+                
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close" >
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                
             </div>
             <form method='POST' action='edit-ordinance/{{$ordinance->id}}' onsubmit='show();'  enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
-                    <div class='col-md-12'>
-                       Ordinance No.:
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Ordinance No.:</label>
                        <input class='form-control' value='{{$ordinance->ordinance_number}}' type='text' name='ordinance_number' required>
                     </div>
-                    <div class='col-md-12'>
-                       Title:
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Title:</label>
                        <input class='form-control' value='{{$ordinance->title}}'  type='text' name='title' required>
                     </div>
-                    <div class='col-md-12'>
-                       Date Approved:
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Date Approved:</label>
                        <input class='form-control' value='{{$ordinance->date_approved}}'  type='date' name='date_approved' >
                     </div>
-                    <div class='col-md-12'>
-                       Status :
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Status :</label>
                        <select class='form-control'  name='status' required>
                            <option value=''></option>
                            <option value=1 {{ ($ordinance->status == 1 ? "selected":"") }}>Implemented</option>
@@ -38,8 +40,9 @@
 
                        </select>
                     </div>
-                    <div class='col-md-12'>
-                       Category :
+                    <div class='col-md-12 form-group'>
+                       
+                       <label>Category :</label>
                        <select class='form-control'  name='category' required>
                            <option value=''></option>
                            @foreach($categories as $category)
@@ -48,17 +51,37 @@
                        </select>
                     </div>
                 
-                    <div class='col-md-12'>
-                        Change File (current file : <a href='{{url($ordinance->uploaded_file)}}' target='_blank'>Download File </a>  ):
-                        <input class='form-control' type='file' name='attachment' >
+                    <div class='col-md-12 form-group'>
+                  
+                        <input type="hidden" name="attachment_folder" value="{{$folder}}">
+                        
+                        <label>Attachments:</label>
+
+                        @if ( isset($files) )
+                          <ul style="list-style: none;padding: 5px 0px;">
+                          @foreach( $files as $file)
+                              <li style="padding: 5px 0px;">
+
+                                  <a href="{{ route('delete_or_file' , [$ordinance->id , $file] ) }}" class=" btn btn-xs btn-danger"> <i class="fa fa-trash"></i></a>
+                                  <a href='{{url('attachments/'.$folder.'/'.$file)}}' class="btn btn-warning btn-xs" target='_blank'><i class="fa fa-download"></i>  {{$file}} </a>
+                                   
+                              </li>                              
+                          @endforeach
+                        </ul>
+                        @endif
+                        
+
+                        <input class='form-control' type='file' name='attachment[]' multiple="" >
                      </div>
-                    <div class='col-md-12'>
-                        Remarks:
+                    <div class='col-md-12 form-group'>
+                        
+                        <label>Remarks:</label>
                         <textarea class='form-control' type='file' name='remarks' >{{$ordinance->remarks}}</textarea>
                      </div>
 
-                     <div class='col-md-12'>
-                       Sponsored By:
+                     <div class='col-md-12 form-group'>
+                       
+                       <label>Sponsored By:</label>
                        <input class='form-control' type='text' name='sponsor' required value="{{$ordinance->sponsor}}">
                       </div>
                       

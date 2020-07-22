@@ -76,6 +76,14 @@
                                     <tbody>
                                         @foreach($ordinances as $ordinance)
 
+                                        @php
+                                            $attachment_arr = @unserialize($ordinance->uploaded_file);
+
+                                            $folder = $attachment_arr['attachment_folder'];
+                                            $files = $attachment_arr['files'];
+                                        @endphp
+
+
                                         <tr >
                                             <td > {{$ordinance->ordinance_number}} </td>
                                             <td width="500px"> <strong>{{$ordinance->title}}</strong></td>
@@ -95,14 +103,14 @@
                                             <td > {{$ordinance->category->name}}</td>
                                             <td > 
 
-                                            <a  href='{{url($ordinance->uploaded_file)}}' target='_blank'  class="btn btn-white btn-sm"><i class="fa fa-download"></i> Download File </a>
+                                             <a  data-target="#edit_resolution{{$ordinance->id}}" data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> {{ (count($files) == 0 ? 'No' : count($files) )}} File (s) </a>
                                              
                                             <td> {{ $ordinance->sponsor }}</td>
                                             <td hidden=""> {{$ordinance->remarks}}</td>
                                             <td hidden="">{{$ordinance->added_by->name}}</td>
                                             <td width="200px">    
 
-                                                <a  onclick='' data-target="#view_history{{$ordinance->id}}" data-toggle="modal" type="button"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                                {{-- <a  onclick='' data-target="#view_history{{$ordinance->id}}" data-toggle="modal" type="button"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a> --}}
 
                                                 <a onclick='' data-target="#edit_ordinance{{$ordinance->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
 
@@ -161,7 +169,7 @@
                             {
                                 extend: 'print',
                                 exportOptions: {
-                                    columns: [ 0, 2, 1 ,6]
+                                    columns: [ 0, 2, 1 ,3, 4, 6]
                                 },
                                 title : '{{config('app.name')}} - Ordinances',
                                 
@@ -175,6 +183,29 @@
                                     $(win.document.body).find('table')
                                     .addClass('compact')
                                     .css('font-size', 'inherit');
+
+                                    var last = null;
+                                    var current = null;
+                                    var bod = [];
+                     
+                                    var css = '@page { size: landscape; }',
+                                        head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                        style = win.document.createElement('style');
+                     
+                                    style.type = 'text/css';
+                                    style.media = 'print';
+                     
+                                    if (style.styleSheet)
+                                    {
+                                      style.styleSheet.cssText = css;
+                                    }
+                                    else
+                                    {
+                                      style.appendChild(win.document.createTextNode(css));
+                                    }
+                     
+                                    head.appendChild(style);
+
                                 }
                             }]
                             
