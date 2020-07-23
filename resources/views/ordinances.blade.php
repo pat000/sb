@@ -21,7 +21,7 @@
                     <h5>Ordinances</h5>
                     <div class="ibox-tools">
                         
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a href="#">
                             <button class="btn btn-primary" data-target="#new_ordinance" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Ordinance</button>
                         </a>
                         <a class="collapse-link">
