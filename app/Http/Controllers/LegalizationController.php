@@ -113,7 +113,13 @@ class LegalizationController extends Controller
                 }
 
                 $attachment->move($attachment_folder, $name);
-                array_push(@$old_files, $name);
+                
+                if (!empty($old_files)) {
+                    array_push($old_files, $name);
+                } else 
+                {
+                    $old_files[] = $name;
+                }
 
             }
             
