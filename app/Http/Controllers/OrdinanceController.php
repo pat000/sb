@@ -118,10 +118,11 @@ class OrdinanceController extends Controller
                 }
 
                 $attachment->move($attachment_folder, $name);
-                array_push($old_files, $name);
+
+                array_push(@$old_files, $name);
 
             }
-            
+
             $file_names['files'] = $old_files;
             $ordinance->uploaded_file  = serialize($file_names) ;
             
@@ -142,7 +143,7 @@ class OrdinanceController extends Controller
 
             if ($ordinance) {
                 $ordinance->delete();
-                
+
                 $request->session()->flash('status','Successfully Deleted.');
                 return back(); 
             }

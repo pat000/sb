@@ -113,7 +113,7 @@ class LegalizationController extends Controller
                 }
 
                 $attachment->move($attachment_folder, $name);
-                array_push($old_files, $name);
+                array_push(@$old_files, $name);
 
             }
             
