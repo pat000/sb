@@ -38,26 +38,14 @@
                                 
                                 <table id='' class="table table-striped table-bordered table-hover dataTables-example mb-5" >
                                     <thead>
-                                        {{-- <tr>
-                                            <td><input type="text" name="" id="txtorno" class="form-control" placeholder="Ordinance No."></td>
-                                            <td><input type="text" name="" id="txttitle" class="form-control" placeholder="Title"></td>
-                                            <td><input type="text" name="" id="txtdate" class="form-control" placeholder="Date Approved"></td>
-                                            <td>
-                                                <select class="form-control" id="txtstatus">
-                                                    <option disabled="" selected="">-- Select status</option>
-                                                    <option >Implemented</option>
-                                                    <option >Not Implemented</option>
-                                                </select>
-                                            </td>
-                                           
-                                            <td colspan="4"><input type="text" name="" id="txtsponsor" class="form-control" placeholder="Sponsor"></td>
-                                        </tr> --}}
+                                       
                                         <tr>
                                             <th > Case No. </th>
                                             <th width="500px"> Operator Informations</th>
                                             <th width="300px"> Vehicle Informations</th>
                                             <th > Date Issued</th>
                                             <th>Status</th>
+                                            <th>Attachments</th>
                                             <th width="200px"> Action</th>
                                         </tr>
                                     </thead>
@@ -87,6 +75,16 @@
                                                 $data_status = $date_now->diffInYears($date_issue);
                                             @endphp
                                             <td><span class="label {{($data_status >= 3) ? 'label-danger' : 'label-success'}}"> {{($data_status >= 3) ? 'Expired' : 'Good'}}</span></ntd>
+
+                                            <td>
+                                                <a href="{{ route('get-form', $motor_info->id) }}" target="_blank" type="button" class="btn btn-xs btn-info"><i class="fa fa-download"></i> Application</a>
+
+                                                @if ($motor_info->signed_form)
+
+                                                    <a href="{{ url('motorized_form/'.$motor_info->id.'/'.$motor_info->signed_form) }}" target="_blank" type="button" class="btn btn-xs btn-primary"><i class="fa fa-download"></i> Signed</a>
+                                                @endif
+                                                
+                                            </td>
 
                                             <td width="200px">    
 

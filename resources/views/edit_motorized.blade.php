@@ -10,7 +10,7 @@
                     </button>
                 
             </div>
-            <form method='POST' action="{{ route('motorized.update' , $motor_info->id)}}" onsubmit='show();'  >
+            <form method='POST' action="{{ route('motorized.update' , $motor_info->id)}}" onsubmit='show();'  enctype="multipart/form-data"  >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     @method('PUT')
@@ -71,6 +71,17 @@
                         <div class=' form-group col-md-4'>
                            <label>Age</label>
                            <input class='form-control' type='number' name='age' required value="{{$motor_info->age}}">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @if ($motor_info->signed_form)
+                              <label>Download signed form:</label>
+                                <a href="{{ url('motorized_form/'.$motor_info->id.'/'.$motor_info->signed_form) }}" target="_blank" type="button" class="btn btn-xs btn-warning"><i class="fa fa-download"></i> Signed form</a>
+                            @endif
+                            <br>
+
+                            <label>Upload Signed form: </label>
+                            <input type="file" name="signed_form" class="form-control">
                         </div>
                     </div>
                     

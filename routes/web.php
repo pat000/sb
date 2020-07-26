@@ -14,6 +14,7 @@
 
 Auth::routes();
 
+
 Route::group( ['middleware' => 'auth'], function() {
 
 	Route::get('/', 'HomeController@home');
@@ -48,8 +49,7 @@ Route::group( ['middleware' => 'auth'], function() {
 
 	Route::get('delete-legalization-file/{id}/{filename}','LegalizationController@delete_leg_file')->name('delete_leg_file');
 
-
-
 	// Motorized
 	Route::resource('motorized','MotorizedController');
+	Route::get('legalization/get-form/{id}','MotorizedController@getForm')->name('get-form');
 });

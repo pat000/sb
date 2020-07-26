@@ -120,7 +120,7 @@
                                             </td>
                                         </tr>
                                         @include('edit_ordinance')
-                                        @include('view_history')
+                                        {{-- @include('view_history') --}}
                                         @endforeach
                                        
                                     </tbody>

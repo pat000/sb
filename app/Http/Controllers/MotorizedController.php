@@ -63,9 +63,48 @@ class MotorizedController extends Controller
 
         $motorized->save();
 
+        $this->saveForm($motorized);
 
-        $request->session()->flash('status','Successfully Added.');
-        return back(); 
+        return back();
+    }
+
+    public  function saveForm($info)
+    {      
+        $pdf_folder = $info['id'];
+        $pdf_name = 'CASE-NO-'.$info['case_no'].'-'.strtoupper(str_slug($info['operator_name']));
+
+        $data['case_no'] = $info['case_no'];
+        $data['operator_name'] = $info['operator_name'];
+        $data['address'] = $info['address'];
+
+        $data['motor_name'] = $info['motor_name'];
+        $data['motor_number'] =$info['motor_no'];
+        $data['motor_chassic'] = $info['motor_chassic'];
+        $data['plate_number'] = $info['plate_number'];
+
+        $data['date_issued'] = date("M d, Y",strtotime($info['date_issued']));
+        $data['vice_mayor'] = $info['vice_mayor'];
+        $data['age'] = $info['age'];
+
+        $pdf = \PDF::loadView('pdf.form' , compact('data'));
+        $pdf->setPaper('legal', 'portrait');
+
+        $pdf_path = public_path().'/motorized_form/'.$pdf_folder;
+
+        if (!is_file($pdf_path)) {
+            \File::makeDirectory($pdf_path , 0777 , true , true);
+        }
+
+        return $pdf->save( $pdf_path.'/'.$pdf_name.'.pdf')->stream($pdf_name.'.pdf');
+    }
+
+
+    public function getForm($id) {
+        $motorized = Motorized::find($id);
+
+        if ($motorized) {
+            return $this->saveForm($motorized);
+        }
     }
 
     /**
@@ -119,8 +158,32 @@ class MotorizedController extends Controller
             $motorized->vice_mayor = $request->vice_mayor;
             $motorized->age =   $request->age;
 
-            $motorized->save();
 
+            $attachment = $request->signed_form;
+
+            if($attachment)
+            {   
+                $attachment_path = public_path().'/motorized_form/';
+                $attachment_folder = $attachment_path.$motorized->id;
+
+                $original_name = str_replace(' ', '',$attachment->getClientOriginalName());
+                $name = time().'_'.$original_name;
+
+                if ( !file_exists($attachment_folder))
+                {
+                    \File::makeDirectory($attachment_folder , 0777 , true);
+                }
+
+                if ($motorized->signed_form) {
+                    unlink($attachment_folder.'/'.$motorized->signed_form);
+                }
+
+                $attachment->move($attachment_folder, $name);
+                $motorized->signed_form  = $name ;
+            }
+
+
+            $motorized->save();
 
             $request->session()->flash('status','Data for '.$motorized->operator_name.' Successfully Updated.');
             return back(); 

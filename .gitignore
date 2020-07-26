@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/attachments
+/public/motorized_form
 /storage/*.key
 /vendor
 .env

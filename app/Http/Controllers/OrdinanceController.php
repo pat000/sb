@@ -73,17 +73,17 @@ class OrdinanceController extends Controller
     public function edit_ordinance (request $request , $id)
     {
         $ordinance = Ordinance::findOrfail($id);
-        $history_ordinance = new HistoryOrdinance;
-        $history_ordinance->ordinance_number = $ordinance->ordinance_number;
-        $history_ordinance->title = $ordinance->title;
-        $history_ordinance->date_approved = $ordinance->date_approved;
-        $history_ordinance->status = $ordinance->status;
-        $history_ordinance->category = $ordinance->category;
-        $history_ordinance->remarks = $ordinance->remarks;
-        $history_ordinance->uploaded_file = $ordinance->uploaded_file;
-        $history_ordinance->ordinance_id = $id;
-        $history_ordinance->uploaded_by = $ordinance->uploaded_by;
-        $history_ordinance->save();
+        // $history_ordinance = new HistoryOrdinance;
+        // $history_ordinance->ordinance_number = $ordinance->ordinance_number;
+        // $history_ordinance->title = $ordinance->title;
+        // $history_ordinance->date_approved = $ordinance->date_approved;
+        // $history_ordinance->status = $ordinance->status;
+        // $history_ordinance->category = $ordinance->category;
+        // $history_ordinance->remarks = $ordinance->remarks;
+        // $history_ordinance->uploaded_file = $ordinance->uploaded_file;
+        // $history_ordinance->ordinance_id = $id;
+        // $history_ordinance->uploaded_by = $ordinance->uploaded_by;
+        // $history_ordinance->save();
 
         $ordinance->ordinance_number = $request->ordinance_number;
         $ordinance->title = $request->title;

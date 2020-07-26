@@ -34,12 +34,12 @@
                                 {{-- <div class="ibox-tools">
                                     <span class="label label-success float-right">Monthly</span>
                                 </div> --}}
-                                <h5> Legalizations</h5>
+                                <h5> Resolutions</h5>
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins">{{ $data['total_legalization']}}</h1>
                                 <div class="stat-percent font-bold text-success"><i class="fa fa-legal fa-lg"></i></div>
-                                <small>Total Legalizations</small>
+                                <small>Total Resolutions</small>
                             </div>
                         </div>
                     </div>
@@ -50,12 +50,12 @@
                                 {{-- <div class="ibox-tools">
                                     <span class="label label-success float-right">Monthly</span>
                                 </div> --}}
-                                <h5> Motorized</h5>
+                                <h5> Legalizations</h5>
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins">{{$data['total_motorized']}}</h1>
                                 <div class="stat-percent font-bold text-success"> <i class="fa fa-motorcycle fa-lg"></i></div>
-                                <small>Total Motorized</small>
+                                <small>Total Legalizations</small>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="col-lg-6">
                         <div class="ibox">
                             <div class="ibox-title">
-                                Legalizations by status
+                                Resolutions by status
                             </div>
                             <div class="ibox-content">  
                                 <canvas id="legalizations" height="358" width="768" class="chartjs-render-monitor" style="display: block; width: 768px; height: 358px;"></canvas>
