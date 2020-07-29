@@ -103,7 +103,7 @@
                                             <td > {{$ordinance->category->name}}</td>
                                             <td > 
 
-                                             <a  data-target="#edit_resolution{{$ordinance->id}}" data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> {{ ( empty($files) ? 'No' : count($files) )}} File (s) </a>
+                                             <a  data-target="#edit_ordinance{{$ordinance->id}}" data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> {{ ( empty($files) ? 'No' : count($files) )}} File (s) </a>
                                              
                                             <td> {{ $ordinance->sponsor }}</td>
                                             <td hidden=""> {{$ordinance->remarks}}</td>

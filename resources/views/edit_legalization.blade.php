@@ -1,4 +1,9 @@
+<style type="text/css">
+  input{
+    text-transform: uppercase;
+  }
 
+</style>
 <div class="modal fade" id="edit_resolution{{$resolution->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">

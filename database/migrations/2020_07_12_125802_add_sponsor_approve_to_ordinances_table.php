@@ -13,11 +13,13 @@ class AddSponsorApproveToOrdinancesTable extends Migration
      */
     public function up()
     {
-        Schema::table('ordinances', function (Blueprint $table) {
-            //
-            $table->string('sponsor')->after('uploaded_by');
-            $table->string('approver')->after('sponsor');
-        });
+        if(Schema::hasTable('ordinances')){
+            Schema::table('ordinances', function (Blueprint $table) {
+                //
+                $table->string('sponsor')->after('uploaded_by');
+                $table->string('approver')->after('sponsor');
+            });
+        }
     }
 
     /**

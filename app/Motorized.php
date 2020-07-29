@@ -10,6 +10,9 @@ class Motorized extends Model
 
     protected $table = 'motorized';
 
+    protected $attributes = [
+       'signed_form' => '',
+    ];
 
     protected $appends = array(
         'form'

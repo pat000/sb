@@ -49,17 +49,17 @@ class MotorizedController extends Controller
 
         $motorized = new Motorized;
 
-        $motorized->case_no = $request->case_no;
-        $motorized->operator_name = $request->operator_name;
-        $motorized->address = $request->address;
-        $motorized->motor_name = $request->motor_name;
-        $motorized->motor_no = $request->motor_number;
-        $motorized->motor_chassic = $request->motor_chassic;
-        $motorized->plate_number = $request->plate_number;
+        $motorized->case_no = strtoupper($request->case_no);
+        $motorized->operator_name = strtoupper($request->operator_name);
+        $motorized->address = strtoupper($request->address);
+        $motorized->motor_name = strtoupper($request->motor_name);
+        $motorized->motor_no = strtoupper($request->motor_number);
+        $motorized->motor_chassic = strtoupper($request->motor_chassic);
+        $motorized->plate_number = strtoupper($request->plate_number);
 
-        $motorized->date_issued = $request->date_issued;
-        $motorized->vice_mayor = $request->vice_mayor;
-        $motorized->age =   $request->age;
+        $motorized->date_issued = strtoupper($request->date_issued);
+        $motorized->vice_mayor = strtoupper($request->vice_mayor);
+        $motorized->age =   strtoupper($request->age);
 
         $motorized->save();
 
@@ -146,17 +146,17 @@ class MotorizedController extends Controller
 
         if ($motorized) {
 
-            $motorized->case_no = $request->case_no;
-            $motorized->operator_name = $request->operator_name;
-            $motorized->address = $request->address;
-            $motorized->motor_name = $request->motor_name;
-            $motorized->motor_no = $request->motor_number;
-            $motorized->motor_chassic = $request->motor_chassic;
-            $motorized->plate_number = $request->plate_number;
+            $motorized->case_no = strtoupper($request->case_no);
+            $motorized->operator_name = strtoupper($request->operator_name);
+            $motorized->address = strtoupper($request->address);
+            $motorized->motor_name = strtoupper($request->motor_name);
+            $motorized->motor_no = strtoupper($request->motor_number);
+            $motorized->motor_chassic = strtoupper($request->motor_chassic);
+            $motorized->plate_number = strtoupper($request->plate_number);
 
-            $motorized->date_issued = $request->date_issued;
-            $motorized->vice_mayor = $request->vice_mayor;
-            $motorized->age =   $request->age;
+            $motorized->date_issued = strtoupper($request->date_issued);
+            $motorized->vice_mayor = strtoupper($request->vice_mayor);
+            $motorized->age =   strtoupper($request->age);
 
 
             $attachment = $request->signed_form;
