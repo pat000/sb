@@ -90,11 +90,13 @@
 
                                                 <a onclick='' data-target="#edit_motorized{{$motor_info->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
 
+                                                @if (auth()->user()->is_admin) 
                                                 <form  style="display:inline-block;" method="post" action="{{route('motorized.destroy' ,$motor_info->id )}}">
                                                     {{ csrf_field() }}
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </button>
                                                 </form>
+                                                @endif
                                                 
 
                                                 

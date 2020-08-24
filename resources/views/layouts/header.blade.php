@@ -124,7 +124,7 @@
                      <li @if($header == 'Legalization') class='active' @endif>
                         <a href="{{ url('/motorized') }}" class='active' onclick='show()' ><i class="fa fa-motorcycle "></i> <span class="nav-label">Legalizations</span> </a>
                     </li>
-                    @if(auth()->user()->role == "Admin")
+                    @if(auth()->user()->is_admin)
                     <li @if($header == 'Settings') class='active' @endif>
                         <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
                         
@@ -184,9 +184,9 @@
         </div>
         {{-- <script> --}}
             <script type='text/javascript'>
-                function show()
+                function show( data='block')
                 {
-                    document.getElementById("myDiv").style.display="block";
+                    document.getElementById("myDiv").style.display=data;
                 }
                 function logout()
                 {
@@ -197,6 +197,11 @@
             </script>
             
             <script src="{{ asset('bootstrap/js/jquery-3.1.1.min.js') }}"></script>
+
+            <!-- jQuery UI -->
+            <script src="{{ asset('bootstrap/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+            
+            
             <script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
             <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
             <script src="{{ asset('bootstrap/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
@@ -233,8 +238,6 @@
             <!-- Custom and plugin javascript -->
             <script src="{{ asset('bootstrap/js/plugins/pace/pace.min.js') }}"></script>
             
-            <!-- jQuery UI -->
-            <script src="{{ asset('bootstrap/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
             
             {{-- <!-- Jvectormap -->
                 <script src="{{ asset('bootstrap/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
@@ -274,8 +277,7 @@
                     
                 </script>
 
-
-                   @yield('js-custom')
+                @yield('js-custom')
             </body>
             </html>
             

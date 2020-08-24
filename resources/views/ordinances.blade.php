@@ -4,6 +4,25 @@
 
 @section('content')
 
+<style type="text/css">
+    
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 0% !important;
+        left: 0% !important;
+        width: 100% !important;
+        background: #ffffffa1;
+        height: 100% !important;
+        margin-left: 0px !important;
+        font-size: 30px;
+        margin-top: 0px !important;
+        text-align: center;
+        padding: 1em 0;
+    }
+
+</style>
+
+
 @if(session()->has('status'))
 <div class="alert alert-success alert-dismissable">
     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -13,8 +32,6 @@
 @include('error')
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        @include('new_ordinance')    
-                                
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title pb-3">
@@ -36,7 +53,7 @@
                         <div class="dataTables_wrapper container-fluid dt-bootstrap4">
                                 
                                 
-                                <table id='' class="table table-striped table-bordered table-hover dataTables-example mb-5" >
+                                <table id='tblordinances' class="table table-striped table-bordered table-hover mb-5"  style="width: 100% !important">
                                     <thead>
                                         <tr>
                                             <td><input type="text" name="" id="txtorno" class="form-control" placeholder="Ordinance No."></td>
@@ -45,9 +62,10 @@
                                             <td>
                                                 <select class="form-control" id="txtstatus">
                                                     <option disabled="" selected="">-- Select status</option>
-
-                                                    <option >Implemented</option>
-                                                    <option >Not Implemented</option>
+                                                    <option value="1">Implemented</option>
+                                                    <option value="0">Not Implemented</option>
+                                                    <option value="2"> Approved</option>
+                                                    <option value="3"> Disapproved</option>
                                                 </select>
                                             </td>
                                             <td colspan="2">
@@ -68,61 +86,12 @@
                                             <th > Category</th>
                                             <th > File</th>
                                             <th>Sponsor</th>
-                                            <th hidden> Remarks</th>
-                                            <th hidden> Uploaded By</th>
                                             <th width="200px"> Action</th>
+                                            <th hidden >id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($ordinances as $ordinance)
-
-                                        @php
-                                            $attachment_arr = @unserialize($ordinance->uploaded_file);
-
-                                            $folder = $attachment_arr['attachment_folder'];
-                                            $files = $attachment_arr['files'];
-                                        @endphp
-
-
-                                        <tr >
-                                            <td > {{$ordinance->ordinance_number}} </td>
-                                            <td width="500px"> <strong>{{$ordinance->title}}</strong></td>
-                                            <td >{{date("M d, Y",strtotime($ordinance->date_approved))}}</td>
-                                            <td >  
-                                                @if ($ordinance->status == 1) 
-                                                    <span class="label label-primary">Implemented</span> 
-                                                @elseif ($ordinance->status == 2) 
-                                                    <span class="label label-success">Approved</span> 
-                                                @elseif ($ordinance->status == 3) 
-                                                    <span class="label label-warning">Disapproved</span> 
-                                                @else 
-                                                    <span class="label label-default">Not Implemented</span> 
-                                                @endif
-
-                                            </td>
-                                            <td > {{$ordinance->category->name}}</td>
-                                            <td > 
-
-                                             <a  data-target="#edit_ordinance{{$ordinance->id}}" data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> {{ ( empty($files) ? 'No' : count($files) )}} File (s) </a>
-                                             
-                                            <td> {{ $ordinance->sponsor }}</td>
-                                            <td hidden=""> {{$ordinance->remarks}}</td>
-                                            <td hidden="">{{$ordinance->added_by->name}}</td>
-                                            <td width="200px">    
-
-                                                {{-- <a  onclick='' data-target="#view_history{{$ordinance->id}}" data-toggle="modal" type="button"  class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a> --}}
-
-                                                <a onclick='' data-target="#edit_ordinance{{$ordinance->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-
-                                                <a href="delete-ordinance/{{$ordinance->id}}" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>
-
-                                                
-                                            </td>
-                                        </tr>
-                                        @include('edit_ordinance')
-                                        {{-- @include('view_history') --}}
-                                        @endforeach
-                                       
+                            
                                     </tbody>
                                 </table>
                         </div>
@@ -135,101 +104,235 @@
 </div>
 
 
-<div class="footer">
-    
 </div>
-
-</div>
-
-
-
+@include('edit_ordinance')
+@include('new_ordinance')    
 @endsection
 
 
 @section('js-custom')
 <script type="text/javascript">
-    
-    var ordinance_table = $('.dataTables-example').DataTable({
-                            lengthMenu: [[10, 25, 50,-1], [10, 25, 50,"All"]],
-                            // pageLength: -1,
-                            scrollY:        true,
-                            responsive: true,
-                            searching: true,
-                            ordering: false,
-                     
-                            // dom: "<'html5buttons'B>Tfglip",
-                            dom: '<"html5buttons"B>lTfgitp',
+    var ordinance_table = $('#tblordinances').DataTable({
+        lengthMenu: [[10, 25, 50,-1], [10, 25, 50,"All"]],
+        responsive: true,
+        searching: true,
+        processing: true,
+        serverSide: true,
+        "order" : [[ 8, "desc" ]],
+        ajax: '{{url('getOrdinances')}}',
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [
 
-                            buttons: [
-                            // { extend: 'copy'},
-                            {extend: 'csv'},
-                            {extend: 'excel', title: 'ExampleFile'},
-                            {extend: 'pdf', title: 'ExampleFile'},
-                            
-                            {
-                                extend: 'print',
-                                exportOptions: {
-                                    columns: [ 0, 2, 1 ,3, 4, 6]
-                                },
-                                title : '{{config('app.name')}} - Ordinances',
-                                
-                                customize: function (win)
-                                {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).css('margin', '20px');
-
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'pdf', title: 'ExampleFile'},
+                
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [ 0, 2, 1 ,3, 4, 6]
+                    },
+                    "bShowAll": true,
+                    "oSelectorOpts": { filter: 'all', order: 'current' },
+                    title : '{{config('app.name')}} - Ordinances',
                     
-                                    $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
+                    customize: function (win)
+                    {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+                        $(win.document.body).css('margin', '20px');
 
-                                    var last = null;
-                                    var current = null;
-                                    var bod = [];
-                     
-                                    var css = '@page { size: landscape; }',
-                                        head = win.document.head || win.document.getElementsByTagName('head')[0],
-                                        style = win.document.createElement('style');
-                     
-                                    style.type = 'text/css';
-                                    style.media = 'print';
-                     
-                                    if (style.styleSheet)
-                                    {
-                                      style.styleSheet.cssText = css;
-                                    }
-                                    else
-                                    {
-                                      style.appendChild(win.document.createTextNode(css));
-                                    }
-                     
-                                    head.appendChild(style);
+                        $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                        var last = null;
+                        var current = null;
+                        var bod = [];
+         
+                        var css = '@page { size: landscape; }',
+                            head = win.document.head || win.document.getElementsByTagName('head')[0],
+                            style = win.document.createElement('style');
+         
+                        style.type = 'text/css';
+                        style.media = 'print';
+         
+                        if (style.styleSheet)
+                        {
+                          style.styleSheet.cssText = css;
+                        }
+                        else
+                        {
+                          style.appendChild(win.document.createTextNode(css));
+                        }
+         
+                        head.appendChild(style);
+                    }
+        }],
 
-                                }
-                            }]
-                            
-                        });
+        columns: [
+            {data: 'ordinance_number', name: 'ordinance_number'},
+            {data: 'title', name: 'title'},
+            {data: 'date_approved', name: 'date_approved'},
+            {   
+                "data":"status",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('text-align', 'left');
+                      $(nTd).css('width', '15%');
+                  },
+                  "mRender": function( data, type, full ,meta) {
 
-                    $('#txtorno').on( 'keyup', function () {
-                        ordinance_table.column(0).search( this.value ).draw();
-                    });
-                    $('#txttitle').on( 'keyup', function () {
-                        ordinance_table.column(1).search( this.value ).draw();
-                    });
-                    $('#txtdate').on( 'keyup', function () {
-                        ordinance_table.column(2).search( this.value ).draw();
-                    });
+                        if (full.status == 1) 
+                        {
+                            return '<a class="label label-primary text-white">Implemented</a>'; 
+                        }else if (full.status == 2) {
 
-                    $('#txtstatus').on( 'change', function () {
-                        ordinance_table.column(3).search( this.value ).draw();
-                    })
-                    $('#txtcategory').on( 'change', function () {
-                        ordinance_table.column(4).search( this.value ).draw();
-                    });
+                            return '<span class="label label-success">Approved</span>'; 
+                        }
+                        else if (full.status == 3) {
+                            return '<span class="label label-warning">Disapproved</span>'; 
+                        }
+                        else {
+                            return '<a class="label label-default text-danger">Not Implemented</a>'; 
+                        }
 
-                    $('#txtsponsor').on( 'keyup', function () {
-                        ordinance_table.column(6).search( this.value ).draw();
-                    });
+                  }
+            },
+
+            {data: 'name', name: 'categories.name'},
+            {
+                name : 'uploaded_file', 
+                "data":"uploaded_file",
+                "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                {
+                  $(nTd).css('text-align', 'left');
+                  $(nTd).css('width', '15%');
+                },
+                "mRender": function( data, type, full ,meta) {
+
+                    return '<a  data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> '+full.file_count+' File (s) </a>';
+                }
+
+            },
+            {data: 'sponsor', name: 'sponsor'},
+            
+            {   
+                "data":"id",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('text-align', 'left');
+                      $(nTd).css('width', '15%');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return '<button onclick="editOrdinance('+full.id+')" id="btn-edit'+full.id+'" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'\></i>"  data-toggle="modal" class="btn btn-info text-white btn-sm"><i class="fa fa-pencil"></i> Edit </button> @if (auth()->user()->is_admin)  <a href="delete-ordinance/'+full.id+'" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>'; @endif
+                  }
+            },
+            {   
+                "data":"id",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('display', 'none');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return full.id
+                  }
+            },
+
+        ]
+    });
+
+
+    $('#txtorno').on( 'keyup', function () {
+        ordinance_table.column(0).search( this.value ).draw();
+    });
+    $('#txttitle').on( 'keyup', function () {
+        ordinance_table.column(1).search( this.value ).draw();
+    });
+    $('#txtdate').on( 'keyup', function () {
+        ordinance_table.column(2).search( this.value ).draw();
+    });
+    $('#txtstatus').on( 'change', function () {
+        ordinance_table.column(3).search( this.value ).draw();
+    })
+    $('#txtcategory').on( 'change', function () {
+        ordinance_table.column(4).search( this.value ).draw();
+    });
+    $('#txtsponsor').on( 'keyup', function () {
+        ordinance_table.column(6).search( this.value ).draw();
+    });
+
+
+    $(".form-ordinance").on('submit', function(e) {
+        e.preventDefault();
+        manage_ordinance();
+
+    });
+
+    function manage_ordinance(){
+        show();
+        let form_data = new FormData($(".form-ordinance")[0]);
+          form_data.append('_method', 'post');
+          $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+              url: "new-ordinance",
+              type: 'POST', 
+              dataType:'text',
+              cache: false,
+              contentType: false,
+              processData: false,
+              data:form_data,       
+              success: function(data){
+                show('none');
+                ordinance_table.ajax.reload();
+
+                alert('Data successfully saved. You can input data continously');
+
+                document.getElementById("form-ordinance").reset();
+              },
+              error: function(data){
+                alert('something went wrong');
+              }
+          });
+    }
+
+    function editOrdinance (id) {
+        show();
+        $.ajax({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+          url: "edit-ordinance/"+id,
+          type: 'get', 
+          dataType:'text',
+          cache: false,
+          contentType: false,
+          processData: false, 
+          success: function(data){
+            var info = JSON.parse(data);
+
+            $('input[name="ordinance_id"]').val(info.id);
+            $('input[name="ordinance_number"]').val(info.ordinance_number);
+            $('input[name="title"]').val(info.title);
+            $('#txtname').text(info.title);
+            $('input[name="date_approved"]').val(info.date_approved);
+            $('select[name="status"]').val(info.status);
+            $('select[name="category"]').val(info.category_id);
+            $('textarea[name="remarks"]').val(info.remarks);
+            $('input[name="sponsor"]').val(info.sponsor);
+
+
+            $("#edit_ordinance").modal('show');
+            show('none');
+          },
+          error: function(data){
+
+          }
+        });
+    }
+   
 </script>
 @endsection
+
+
+        
+

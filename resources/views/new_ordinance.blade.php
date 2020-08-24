@@ -9,7 +9,7 @@
                     </button>
                 
             </div>
-            <form method='POST' action='new-ordinance' onsubmit='show();'  enctype="multipart/form-data" >
+            <form class="form-ordinance"  id="form-ordinance" enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <div class='col-md-12 form-group'>

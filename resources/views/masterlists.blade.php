@@ -36,7 +36,7 @@
                                     </td>
                                     <td>
                                     </td>
-                                    <td>{{$user->role}}
+                                    <td>@if ($user->is_admin)  Admin @else Staff @endif
                                     </td>
                                     <td>
                                         <a onclick='' data-target="#edit_account{{$user->id}}" data-toggle="modal" type="button"><i title='edit' class="fa fa-edit"></i></a>

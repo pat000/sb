@@ -34,8 +34,9 @@ Route::group( ['middleware' => 'auth'], function() {
 
 	//Ordinance
 	Route::get('ordinances','OrdinanceController@index');
+	Route::get('getOrdinances','OrdinanceController@getOrdinances');
 	Route::post('new-ordinance','OrdinanceController@new_ordinance');
-	Route::post('edit-ordinance/{id}','OrdinanceController@edit_ordinance');
+	Route::get('edit-ordinance/{id}','OrdinanceController@edit_ordinance');
 	Route::get('delete-ordinance/{id}','OrdinanceController@delete_ordinance');
 
 	Route::get('delete-ordinance-file/{id}/{filename}','OrdinanceController@delete_or_file')->name('delete_or_file');

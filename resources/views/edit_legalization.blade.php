@@ -67,7 +67,10 @@
                           @foreach( $files as $file)
                               <li style="padding: 5px 0px;">
 
+                                @if (auth()->user()->is_admin) 
                                   <a href="{{ route('delete_leg_file' , [$resolution->id , $file] ) }}" class=" btn btn-xs btn-danger"> <i class="fa fa-trash"></i></a>
+                                @endif 
+                                
                                   <a href='{{url('attachments/'.$folder.'/'.$file)}}' class="btn btn-warning btn-xs" target='_blank'><i class="fa fa-download"></i>  {{$file}} </a>
                                    
                               </li>                              

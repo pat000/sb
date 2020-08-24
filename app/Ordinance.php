@@ -11,6 +11,10 @@ class Ordinance extends Model
        'approver' => '',
     ];
 
+    protected $appends = array(
+        'file_count'
+    );
+
     //
     public function added_by()
     {
@@ -27,4 +31,18 @@ class Ordinance extends Model
         return $this->belongsTo('App\Category');
     }
   
+
+    public function getFileCountAttribute()
+    {
+    
+        $attachment_arr = @unserialize($this->uploaded_file);
+
+        $folder = $attachment_arr['attachment_folder'];
+        $files = $attachment_arr['files'];
+
+        return count($files);
+
+    }
+
+
 }

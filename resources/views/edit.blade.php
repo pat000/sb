@@ -32,8 +32,8 @@
                         <select  name='role' class="form-control"  required>
                             <option value=''></option>
                             {{-- @foreach($roles as $role) --}}
-                            <option value='Admin' {{ ($user->role == "Admin" ? "selected":"") }}>Admin</option>
-                            <option value='Staff' {{ ($user->role == "Staff" ? "selected":"") }}>Staff</option>
+                            <option value=1 {{ ($user->is_admin ? "selected":"") }}>Admin</option>
+                            <option value=0 {{ (!$user->is_admin ? "selected":"") }}>Staff</option>
                             {{-- @endforeach --}}
                         </select>
                     </div>

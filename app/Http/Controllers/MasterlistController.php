@@ -36,8 +36,8 @@ class MasterlistController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->role = $request->role;
-        $user->add_by = auth()->user()->id;
+        $user->is_admin = $request->role;
+        // $user->add_by = auth()->user()->id;
         $user->save();
         
         $request->session()->flash('status','Successfully Added.');
@@ -64,7 +64,7 @@ class MasterlistController extends Controller
         $data =  User::find($id);
         $data->name = $request->input('name');
         $data->email = $request->input('email');
-        $data->role = $request->input('role');
+        $data->is_admin = $request->input('role');
         $data->save();
         $request->session()->flash('status',$data->name . ' Successfully Changed!');
         return back();

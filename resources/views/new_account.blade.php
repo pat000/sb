@@ -32,8 +32,8 @@
                         <select  name='role' class="form-control"  required>
                             <option value=''></option>
                             {{-- @foreach($roles as $role) --}}
-                            <option value='Admin'>Admin</option>
-                            <option value='Staff'>Staff</option>
+                            <option value=1>Admin</option>
+                            <option value=0>Staff</option>
                             {{-- @endforeach --}}
                         </select>
                     </div>

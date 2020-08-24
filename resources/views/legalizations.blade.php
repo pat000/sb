@@ -109,7 +109,9 @@
 
                                                 <a onclick='' data-target="#edit_resolution{{$resolution->id}}" data-toggle="modal" type="button" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
 
+                                                @if (auth()->user()->is_admin) 
                                                 <a href="delete-legalization/{{$resolution->id}}" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>
+                                                @endif
 
                                                 
                                             </td>

@@ -5,6 +5,7 @@ use App\Ordinance;
 use App\Category;
 use App\HistoryOrdinance;
 use Illuminate\Http\Request;
+use DataTables;
 
 class OrdinanceController extends Controller
 {
@@ -13,17 +14,33 @@ class OrdinanceController extends Controller
     public function index() {
 
         $categories = Category::get();
-        $ordinances = Ordinance::with('added_by','history.added_by')->orderBy('created_at','desc')->get();
         return view('ordinances',array(
 
             'subheader' => 'Home',
             'header' => 'Ordinances',
             'categories' => $categories,
-            'ordinances' => $ordinances,
             
         ));
 
     }
+
+    public function getOrdinances(){
+
+        $ordinances = Ordinance::join('categories' , 'ordinances.category_id' , '=' , 'categories.id')
+                        ->select('ordinances.*' , 'categories.name');
+
+        return Datatables::of($ordinances)
+                ->editColumn('ordinance_number', '{{$ordinance_number}}')
+                ->setRowId('ordinance_number')
+                ->make(true);
+    }
+
+    public function edit_ordinance($id)
+    {
+        $ordinance = Ordinance::find($id);
+        return $ordinance;
+    }
+
     public function new_ordinance (Request $request)
     {
         $ordinance = new Ordinance;
@@ -70,21 +87,10 @@ class OrdinanceController extends Controller
         $request->session()->flash('status','Successfully Added.');
         return back(); 
     }   
-    public function edit_ordinance (request $request , $id)
+    public function update_ordinance (request $request , $id)
     {
         $ordinance = Ordinance::findOrfail($id);
-        // $history_ordinance = new HistoryOrdinance;
-        // $history_ordinance->ordinance_number = $ordinance->ordinance_number;
-        // $history_ordinance->title = $ordinance->title;
-        // $history_ordinance->date_approved = $ordinance->date_approved;
-        // $history_ordinance->status = $ordinance->status;
-        // $history_ordinance->category = $ordinance->category;
-        // $history_ordinance->remarks = $ordinance->remarks;
-        // $history_ordinance->uploaded_file = $ordinance->uploaded_file;
-        // $history_ordinance->ordinance_id = $id;
-        // $history_ordinance->uploaded_by = $ordinance->uploaded_by;
-        // $history_ordinance->save();
-
+    
         $ordinance->ordinance_number = $request->ordinance_number;
         $ordinance->title = $request->title;
         $ordinance->date_approved = $request->date_approved;
