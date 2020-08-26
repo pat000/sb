@@ -10,7 +10,7 @@
                     </button>
                 
             </div>
-            <form method='POST' action='new-resolution' onsubmit='show();'  enctype="multipart/form-data" >
+            <form  class="form-legalization"  id="form-legalization" enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <div class='col-md-12 form-group'>

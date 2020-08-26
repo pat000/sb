@@ -1,4 +1,16 @@
 
+<style type="text/css">
+    
+  .file_ul{
+    list-style: none;padding: 5px 0px;
+
+  }
+
+  .file_ul li{
+    padding: 5px 0px;
+  }
+
+</style>
 <div class="modal fade" id="edit_ordinance" tabindex="-1" role="dialog" aria-labelledby="edit_ordinance" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content">
@@ -10,7 +22,7 @@
                     </button>
                 
             </div>
-            <form method='POST' action='edit-ordinance/' onsubmit='show();'  enctype="multipart/form-data" >
+            <form class="form-update-ordinance" enctype="multipart/form-data" >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <input type="text" hidden name="ordinance_id" >
@@ -53,10 +65,16 @@
                 
                     <div class='col-md-12 form-group'>
                   
-                        <input type="hidden" name="attachment_folder" >
+                        <input type="hidden" name="attachment_folder"  >
                         
                         <label>Attachments:</label>
 
+                        <ul id="file_ul" class="file_ul">
+                            <li >
+
+                            </li> 
+
+                        </ul>
 
                         <input class='form-control' type='file' name='attachment[]' multiple="" >
                      </div>

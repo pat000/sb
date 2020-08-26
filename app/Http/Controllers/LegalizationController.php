@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Legalization;
 use App\Category;
 use Illuminate\Http\Request;
+use DataTables;
 
 class LegalizationController extends Controller
 {
@@ -16,17 +17,31 @@ class LegalizationController extends Controller
     public function index()
     {
         //
-
         $categories = Category::get();
-        $resolutions = Legalization::orderBy('created_at','desc')->get();
         return view('legalizations',array(
 
             'subheader' => 'Home',
             'header' => 'Resolutions',
             'categories' => $categories,
-            'resolutions' => $resolutions,
             
         ));
+    }
+
+    public function getLegalizations(){
+
+        $legalizations = Legalization::join('categories' , 'legalizations.category_id' , '=' , 'categories.id')
+                        ->select('legalizations.*' , 'categories.name');
+
+        return Datatables::of($legalizations)
+                ->editColumn('legalization_number', '{{$legalization_number}}')
+                ->setRowId('legalization_number')
+                ->make(true);
+    }
+
+    public function edit_legalization($id)
+    {
+        $legalization = Legalization::find($id);
+        return $legalization;
     }
 
      public function new_legalization (Request $request)
@@ -77,7 +92,7 @@ class LegalizationController extends Controller
     } 
 
 
-    public function edit_legalization (request $request , $id)
+    public function update_legalization (request $request , $id)
     {
         $legalization = Legalization::findOrfail($id);
         
@@ -132,8 +147,10 @@ class LegalizationController extends Controller
         $legalization->uploaded_by  = auth()->user()->id ;
         $legalization->save();
         
-        $request->session()->flash('status','Successfully Changed.');
-        return back(); 
+        // $request->session()->flash('status','Successfully Changed.');
+        // return back();
+
+        return json_encode($legalization); 
 
     }
   

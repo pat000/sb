@@ -15,11 +15,9 @@ class OrdinanceController extends Controller
 
         $categories = Category::get();
         return view('ordinances',array(
-
             'subheader' => 'Home',
             'header' => 'Ordinances',
             'categories' => $categories,
-            
         ));
 
     }
@@ -143,8 +141,7 @@ class OrdinanceController extends Controller
         $ordinance->uploaded_by  = auth()->user()->id ;
         $ordinance->save();
         
-        $request->session()->flash('status','Successfully Changed.');
-        return back(); 
+        return json_encode($ordinance);
 
     }
 

@@ -37,6 +37,7 @@ Route::group( ['middleware' => 'auth'], function() {
 	Route::get('getOrdinances','OrdinanceController@getOrdinances');
 	Route::post('new-ordinance','OrdinanceController@new_ordinance');
 	Route::get('edit-ordinance/{id}','OrdinanceController@edit_ordinance');
+	Route::post('update-ordinance/{id}','OrdinanceController@update_ordinance');
 	Route::get('delete-ordinance/{id}','OrdinanceController@delete_ordinance');
 
 	Route::get('delete-ordinance-file/{id}/{filename}','OrdinanceController@delete_or_file')->name('delete_or_file');
@@ -44,8 +45,10 @@ Route::group( ['middleware' => 'auth'], function() {
 
 	// Legalizations
 	Route::get('resolutions','LegalizationController@index');
+	Route::get('getLegalizations','LegalizationController@getLegalizations');
 	Route::post('new-resolution','LegalizationController@new_legalization');
-	Route::post('edit-resolution/{id}','LegalizationController@edit_legalization');
+	Route::get('edit-resolution/{id}','LegalizationController@edit_legalization');
+	Route::post('update-resolution/{id}','LegalizationController@update_legalization');
 	Route::get('delete-resolution/{id}','LegalizationController@delete_legalization');
 
 	Route::get('delete-legalization-file/{id}/{filename}','LegalizationController@delete_leg_file')->name('delete_leg_file');

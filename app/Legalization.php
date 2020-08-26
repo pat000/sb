@@ -17,4 +17,27 @@ class Legalization extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+     protected $appends = array(
+        'file_count' , 'files','attachments' , 'file_folder'
+    );
+
+    public function getAttachmentsAttribute()
+    {
+        return @unserialize($this->uploaded_file);
+    }
+
+    public function getFileCountAttribute()
+    {
+        return count($this->attachments['files']);
+    }
+    public function getFileFolderAttribute()
+    {
+        return $this->attachments['attachment_folder'];
+    }
+
+    public function getFilesAttribute()
+    {
+        return $this->attachments['files'];
+    }
 }

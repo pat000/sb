@@ -12,7 +12,7 @@ class Ordinance extends Model
     ];
 
     protected $appends = array(
-        'file_count'
+        'file_count' , 'files','attachments' , 'file_folder'
     );
 
     //
@@ -30,18 +30,24 @@ class Ordinance extends Model
     {
         return $this->belongsTo('App\Category');
     }
-  
+    
+    public function getAttachmentsAttribute()
+    {
+        return @unserialize($this->uploaded_file);
+    }
 
     public function getFileCountAttribute()
     {
-    
-        $attachment_arr = @unserialize($this->uploaded_file);
+        return count($this->attachments['files']);
+    }
+    public function getFileFolderAttribute()
+    {
+        return $this->attachments['attachment_folder'];
+    }
 
-        $folder = $attachment_arr['attachment_folder'];
-        $files = $attachment_arr['files'];
-
-        return count($files);
-
+    public function getFilesAttribute()
+    {
+        return $this->attachments['files'];
     }
 
 

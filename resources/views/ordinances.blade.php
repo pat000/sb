@@ -4,24 +4,6 @@
 
 @section('content')
 
-<style type="text/css">
-    
-    .dataTables_wrapper .dataTables_processing {
-        position: absolute;
-        top: 0% !important;
-        left: 0% !important;
-        width: 100% !important;
-        background: #ffffffa1;
-        height: 100% !important;
-        margin-left: 0px !important;
-        font-size: 30px;
-        margin-top: 0px !important;
-        text-align: center;
-        padding: 1em 0;
-    }
-
-</style>
-
 
 @if(session()->has('status'))
 <div class="alert alert-success alert-dismissable">
@@ -39,7 +21,7 @@
                     <div class="ibox-tools">
                         
                         <a href="#">
-                            <button class="btn btn-primary" data-target="#new_ordinance" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Ordinance</button>
+                            <button class="btn btn-primary" id="btn-new" data-toggle="modal" type="button"><i class="fa fa-plus"></i>&nbsp;New Ordinance</button>
                         </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -210,7 +192,7 @@
                 },
                 "mRender": function( data, type, full ,meta) {
 
-                    return '<a  data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> '+full.file_count+' File (s) </a>';
+                    return '<a onclick="editOrdinance('+full.id+')"   data-toggle="modal"   class="btn btn-white btn-sm"><i class="fa fa-folder-o"></i> '+full.file_count+' File (s) </a>';
                 }
 
             },
@@ -225,7 +207,7 @@
                   },
                   "mRender": function( data, type, full ,meta) {
 
-                        return '<button onclick="editOrdinance('+full.id+')" id="btn-edit'+full.id+'" data-loading-text="<i class=\'fa fa-circle-o-notch fa-spin\'\></i>"  data-toggle="modal" class="btn btn-info text-white btn-sm"><i class="fa fa-pencil"></i> Edit </button> @if (auth()->user()->is_admin)  <a href="delete-ordinance/'+full.id+'" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a>'; @endif
+                        return '<button onclick="editOrdinance('+full.id+')"  data-toggle="modal" class="btn btn-info text-white btn-sm"><i class="fa fa-pencil"></i> Edit </button> @if (auth()->user()->is_admin)  <a href="delete-ordinance/'+full.id+'" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a> @endif';
                   }
             },
             {   
@@ -236,17 +218,24 @@
                   },
                   "mRender": function( data, type, full ,meta) {
 
-                        return full.id
+                        return full.id;
                   }
             },
 
         ]
+    });
+    
+    $('#btn-new').on( 'click', function () {
+        document.getElementById("form-ordinance").reset();
+        $('#new_ordinance').modal('show');
     });
 
 
     $('#txtorno').on( 'keyup', function () {
         ordinance_table.column(0).search( this.value ).draw();
     });
+
+
     $('#txttitle').on( 'keyup', function () {
         ordinance_table.column(1).search( this.value ).draw();
     });
@@ -267,7 +256,6 @@
     $(".form-ordinance").on('submit', function(e) {
         e.preventDefault();
         manage_ordinance();
-
     });
 
     function manage_ordinance(){
@@ -297,7 +285,47 @@
           });
     }
 
+    $(".form-update-ordinance").on('submit', function(e) {
+        e.preventDefault();
+        update_ordinance();
+    });
+
+     function update_ordinance(){
+        show();
+        let form_data = new FormData($(".form-update-ordinance")[0]);
+          form_data.append('_method', 'post');
+          $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+              url: `update-ordinance/${ordinance_id}`,
+              type: 'POST', 
+              dataType:'text',
+              cache: false,
+              contentType: false,
+              processData: false,
+              data:form_data,       
+              success: function(data){
+                var info = JSON.parse(data);
+
+                ordinance_table.ajax.reload();
+
+                $("#file_ul").empty();
+                $.each(info.files, function( index, value ) {
+                    $("#file_ul").append("<li> @if (auth()->user()->is_admin) <a href='delete-ordinance-file/"+info.id+"/"+value+"' class='btn btn-xs btn-danger'> <i class='fa fa-trash'></i></a>@endif <a href='attachments/"+info.file_folder+"/"+value+"' class='btn btn-warning btn-xs' target='_blank'><i class='fa fa-download'></i>  "+value+" </a></li>");
+                });
+
+                alert('Data successfully updated.');
+
+                show('none');
+              },
+              error: function(data){
+                alert('something went wrong');
+              }
+          });
+    }
+
+    var ordinance_id;
     function editOrdinance (id) {
+        $("#file_ul").empty();
         show();
         $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -309,7 +337,7 @@
           processData: false, 
           success: function(data){
             var info = JSON.parse(data);
-
+            ordinance_id = info.id;
             $('input[name="ordinance_id"]').val(info.id);
             $('input[name="ordinance_number"]').val(info.ordinance_number);
             $('input[name="title"]').val(info.title);
@@ -319,7 +347,13 @@
             $('select[name="category"]').val(info.category_id);
             $('textarea[name="remarks"]').val(info.remarks);
             $('input[name="sponsor"]').val(info.sponsor);
+            $('input[name="attachment_folder"]').val(info.file_folder);
 
+
+            $.each(info.files, function( index, value ) {
+                
+                $("#file_ul").append("<li> @if (auth()->user()->is_admin) <a href='delete-ordinance-file/"+info.id+"/"+value+"' class='btn btn-xs btn-danger'> <i class='fa fa-trash'></i></a>@endif <a href='attachments/"+info.file_folder+"/"+value+"' class='btn btn-warning btn-xs' target='_blank'><i class='fa fa-download'></i>  "+value+" </a></li>");
+            });  
 
             $("#edit_ordinance").modal('show');
             show('none');
