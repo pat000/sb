@@ -56,4 +56,9 @@ Route::group( ['middleware' => 'auth'], function() {
 	// Motorized
 	Route::resource('motorized','MotorizedController');
 	Route::get('legalization/get-form/{id}','MotorizedController@getForm')->name('get-form');
+	Route::get('getMotorized','MotorizedController@getMotorized');
+	Route::get('edit-motorized/{id}','MotorizedController@edit_motorized');
+	Route::get('delete-motorized/{id}','MotorizedController@destroy');
+
+	
 });

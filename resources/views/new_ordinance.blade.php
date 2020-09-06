@@ -20,7 +20,7 @@
                     <div class='col-md-12 form-group'>
                        
                        <label>Date Approved:</label>
-                       <input class='form-control' type='date' name='date_approved' placeholder="Date approved">
+                       <input class='form-control' type='date' name='date_approved' placeholder="Date approved" required="">
                     </div>
                     <div class='col-md-12 form-group'>
                        
@@ -66,7 +66,7 @@
                     <div class='col-md-12 form-group'>
                         
                         <label>Remarks:</label>
-                        <textarea class='form-control' type='file' name='remarks' placeholder="remarks" ></textarea>
+                        <textarea class='form-control' type='file' name='remarks' placeholder="remarks" required=""></textarea>
                      </div>
                    
                 </div>

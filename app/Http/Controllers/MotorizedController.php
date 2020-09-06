@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Motorized;
 use Illuminate\Http\Request;
+use DataTables;
 
 class MotorizedController extends Controller
 {
@@ -15,17 +16,31 @@ class MotorizedController extends Controller
     public function index()
     {
         //
-        $motorized = Motorized::orderBy('created_at','desc')->get();
         return view('motorized',array(
 
             'subheader' => 'Home',
             'header' => 'Legalization',
-            'motorized' => $motorized,
-            
         ));
 
 
     }
+
+    public function getMotorized(){
+
+        $legalizations = Motorized::select('motorized.*')->get();
+
+        return Datatables::of($legalizations)
+                ->editColumn('case_no', '{{$case_no}}')
+                ->setRowId('case_no')
+                ->make(true);
+    }
+
+    public function edit_motorized($id)
+    {
+        $motorized = Motorized::find($id);
+        return $motorized;
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -185,13 +200,11 @@ class MotorizedController extends Controller
 
             $motorized->save();
 
-            $request->session()->flash('status','Data for '.$motorized->operator_name.' Successfully Updated.');
-            return back(); 
+            return json_encode($motorized); 
 
         } else  
         {
-            $request->session()->flash('status','Data not found.');
-            return back(); 
+            return 'error';
         }
         
 

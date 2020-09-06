@@ -39,7 +39,7 @@
                     <div class='col-md-12 form-group'>
                        
                        <label>Date Approved:</label>
-                       <input class='form-control' value=''  type='date' name='date_approved' >
+                       <input class='form-control' value=''  type='date' name='date_approved' required="" >
                     </div>
                     <div class='col-md-12 form-group'>
                        
