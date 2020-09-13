@@ -112,9 +112,9 @@
 	<table style="width: 100%">
 		<tr>
 			<td><p class="bold underline capital left">NAME</p></td>
-			<td><p class="bold underline capital left">motor number</p></td>
-			<td><p class="bold underline capital left">chassis number</p></td>
-			<td><p class="bold underline capital left">plate number</p></td>
+			<td><p class="bold underline capital left">motor no.</p></td>
+			<td><p class="bold underline capital left">chassis no.</p></td>
+			<td><p class="bold underline capital left">plate no.</p></td>
 		</tr>
 		<tr>
 			<td><p class="bold left ">{{$data['motor_name']}}</p></td>
@@ -173,7 +173,8 @@
  	<p class="left pl-40">The registrar, LTO, San Quintin, Pangasinan</p>
  	<p class="left pl-40"> <i>(  mcs file )</i></p>
 
- 	<div class="page-break"></div>
+ 	<div class="page-break">
+ 	</div>
  	{{-- page 2 --}}
 
  	<p class="center p-11">Republic of the Philippines</p>
@@ -216,12 +217,12 @@
 
 	<br>
 
-	<table style="width: 100%;font-size: 12px">
+	<table style="width: 100%;">
 		<tr>
 			<td><p class="bold underline capital left">NAME</p></td>
-			<td><p class="bold underline capital left">motor number</p></td>
-			<td><p class="bold underline capital left">chassis number</p></td>
-			<td><p class="bold underline capital left">plate number</p></td>
+			<td><p class="bold underline capital left">motor no.</p></td>
+			<td><p class="bold underline capital left">chassis no.</p></td>
+			<td><p class="bold underline capital left">plate no.</p></td>
 		</tr>
 		<tr>
 			<td><p class="bold left ">{{$data['motor_name']}}</p></td>
