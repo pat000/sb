@@ -105,7 +105,7 @@ class MotorizedController extends Controller
         $data['age'] = $info['age'];
 
         $pdf = \PDF::loadView('pdf.new_form' , compact('data'));
-        $pdf->setPaper('legal', 'portrait');
+        $pdf->setPaper('legal');
 
         $pdf_path = public_path().'/motorized_form/'.$pdf_folder;
 

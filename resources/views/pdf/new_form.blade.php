@@ -173,9 +173,7 @@
  	<p class="left pl-40">The registrar, LTO, San Quintin, Pangasinan</p>
  	<p class="left pl-40"> <i>(  mcs file )</i></p>
 
- 	<br>
- 	<br>
-
+ 	<div class="page-break"></div>
  	{{-- page 2 --}}
 
  	<p class="center p-11">Republic of the Philippines</p>
