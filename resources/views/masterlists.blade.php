@@ -70,7 +70,8 @@
                                 <tr>
                                     <td>{{$category->name}}</td>
                                     <td>
-                                        <a onclick='' data-target="#edit_category{{$category->id}}" data-toggle="modal" type="button"><i title='edit' class="fa fa-edit"></i></a>
+                                        <a onclick='' class="btn btn-xs btn-primary text-white" data-target="#edit_category{{$category->id}}" data-toggle="modal" type="button"><i title='edit' class="fa fa-edit"></i></a>
+                                        <a href="{{ url('delete-category/'.$category->id) }}" type="button" class="btn btn-danger btn-xs"><i title='edit' class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @include('edit_category')    

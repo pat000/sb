@@ -27,7 +27,7 @@ class Motorized extends Model
 
     public function getStatusAttribute () {
 
-        $date_now = Carbon::now();
+        $date_now = Carbon::today();
         $date_issue = Carbon::parse($this->date_issued);
         $data_status = intval($date_now->diffInYears($date_issue));
 

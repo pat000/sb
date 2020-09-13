@@ -48,7 +48,7 @@
                                                  <input type="text" class="form-control" id="txtmotor_name" placeholder="Motor name">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="txtdate" placeholder="date">
+                                                <input type="date" class="form-control" id="txtdate" placeholder="date">
                                             </td>
                                             <td colspan="3">
                                                <select class="form-control" id="txtstatus">
@@ -357,19 +357,13 @@
      $('#txtmotor_name').on( 'keyup', function () {
         motorized_table.column(2).search( this.value ).draw();
     });
-    $('#txtdate').on( 'keyup', function () {
+    $('#txtdate').on( 'change', function () {
         motorized_table.column(3).search( this.value ).draw();
     });
 
     $('#txtstatus').on( 'change', function () {
         motorized_table.column(4).search( this.value ).draw();
     })
-    // $('#txtcategory').on( 'change', function () {
-    //     motorized_table.column(4).search( this.value ).draw();
-    // });
 
-    // $('#txtsponsor').on( 'keyup', function () {
-    //     motorized_table.column(6).search( this.value ).draw();
-    // });
 </script>
 @endsection

@@ -98,10 +98,13 @@ class MotorizedController extends Controller
         $data['plate_number'] = $info['plate_number'];
 
         $data['date_issued'] = date("M d, Y",strtotime($info['date_issued']));
+
+        $data['date_expi'] = date("M d, Y",strtotime($info['date_issued'].'+3 years') );
+
         $data['vice_mayor'] = $info['vice_mayor'];
         $data['age'] = $info['age'];
 
-        $pdf = \PDF::loadView('pdf.form' , compact('data'));
+        $pdf = \PDF::loadView('pdf.new_form' , compact('data'));
         $pdf->setPaper('legal', 'portrait');
 
         $pdf_path = public_path().'/motorized_form/'.$pdf_folder;

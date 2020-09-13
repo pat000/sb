@@ -90,4 +90,15 @@ class MasterlistController extends Controller
         $request->session()->flash('status','Successfully changed.');
         return back(); 
     }
+
+    public function delete_category(Request $request , $id)
+    {
+
+        $category = Category::find($id);
+        $category->delete();
+
+        $request->session()->flash('status','Category deleted.');
+        return back(); 
+
+    }
 }

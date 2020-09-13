@@ -30,6 +30,7 @@ Route::group( ['middleware' => 'auth'], function() {
 	//Category
 	Route::post('new-category','MasterlistController@new_category');
 	Route::post('/edit-category/{id}','MasterlistController@edit_category');
+	Route::get('/delete-category/{id}','MasterlistController@delete_category');
 
 
 	//Ordinance
@@ -51,7 +52,7 @@ Route::group( ['middleware' => 'auth'], function() {
 	Route::post('update-resolution/{id}','LegalizationController@update_legalization');
 	Route::get('delete-resolution/{id}','LegalizationController@delete_legalization');
 
-	Route::get('delete-legalization-file/{id}/{filename}','LegalizationController@delete_leg_file')->name('delete_leg_file');
+	Route::get('delete-resolution-file/{id}/{filename}','LegalizationController@delete_leg_file')->name('delete_leg_file');
 
 	// Motorized
 	Route::resource('motorized','MotorizedController');

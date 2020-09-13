@@ -4,7 +4,7 @@
 	<title>{{ config('app.name') }} - Legalization form - {{$data['case_no']}}_{{$data['operator_name']}}</title>
 <meta name=Title content="">
 <meta name=Keywords content="">
-<meta http-equiv=Content-Type content="text/html; charset=macintosh">
+<meta http-equiv=Content-Type content="text/html">
 <meta name=Generator content="Microsoft Word 15 (filtered)">
 <style>
 
