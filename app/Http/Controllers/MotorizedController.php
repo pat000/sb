@@ -80,7 +80,11 @@ class MotorizedController extends Controller
 
         $this->saveForm($motorized);
 
-        return back();
+        $pdf_folder = $motorized->id;
+        $pdf_path = '/motorized_form/'.$pdf_folder;
+        $pdf_name = 'CASE-NO-'.$motorized->case_no.'-'.strtoupper(str_slug($motorized->operator_name));
+
+        return $pdf_path.'/'.$pdf_name.'.pdf';
     }
 
     public  function saveForm($info)

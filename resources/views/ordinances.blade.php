@@ -40,7 +40,7 @@
                                         <tr>
                                             <td><input type="text" name="" id="txtorno" class="form-control" placeholder="Ordinance No."></td>
                                             <td><input type="text" name="" id="txttitle" class="form-control" placeholder="Title"></td>
-                                            <td><input type="date"  name="" id="txtdate" class="form-control" placeholder="Date Approved"></td>
+                                            <td><input type="text"  name="" id="txtdate" class="form-control" placeholder="Date Approved"></td>
                                             <td>
                                                 <select class="form-control" id="txtstatus">
                                                     <option disabled="" selected="">-- Select status</option>
@@ -239,7 +239,7 @@
     $('#txttitle').on( 'keyup', function () {
         ordinance_table.column(1).search( this.value ).draw();
     });
-    $('#txtdate').on( 'change', function () {
+    $('#txtdate').on( 'keyup', function () {
         ordinance_table.column(2).search( this.value ).draw();
     });
     $('#txtstatus').on( 'change', function () {

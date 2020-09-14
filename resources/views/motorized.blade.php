@@ -48,7 +48,7 @@
                                                  <input type="text" class="form-control" id="txtmotor_name" placeholder="Motor name">
                                             </td>
                                             <td>
-                                                <input type="date" class="form-control" id="txtdate" placeholder="date">
+                                                <input type="text" class="form-control" id="txtdate" placeholder="date">
                                             </td>
                                             <td colspan="3">
                                                <select class="form-control" id="txtstatus">
@@ -68,6 +68,7 @@
                                             <th>Status</th>
                                             <th>Attachments</th>
                                             <th width="200px"> Action</th>
+                                            <th hidden></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -89,13 +90,14 @@
 
 @section('js-custom')
 <script type="text/javascript">
+
      var motorized_table = $('#tblmotorized').DataTable({
         lengthMenu: [[10, 25, 50,-1], [10, 25, 50,"All"]],
         responsive: true,
         searching: true,
         processing: true,
         serverSide: true,
-        // "order" : [[ 8, "desc" ]],
+        "order" : [[ 7, "desc" ]],
         ajax: '{{url('getMotorized')}}',
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
@@ -218,6 +220,18 @@
                         return '<button onclick="editMotorized('+full.id+')"  data-toggle="modal" class="btn btn-info text-white btn-sm"><i class="fa fa-pencil"></i> Edit </button> @if (auth()->user()->is_admin)  <a href="delete-motorized/'+full.id+'" type="button" type="button" class="btn btn-white btn-sm"><i class="fa fa-times"></i> Delete </a> @endif';
                   }
             },
+            {   
+                "data":"id",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('display', 'none');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return full.id;
+                  }
+            },
+
 
         ]
     });
@@ -245,6 +259,15 @@
                 motorized_table.ajax.reload();
 
                 alert('Data successfully saved. You can input data continously');
+
+                var win = window.open(`http://${window.location.hostname}${data}`, '_blank');
+                if (win) {
+                    //Browser has allowed it to be opened
+                    win.focus();
+                } else {
+                    //Browser has blocked it
+                    alert('Please allow popups for this website');
+                }
 
                 document.getElementById("form-motorized").reset();
               },
@@ -357,7 +380,7 @@
      $('#txtmotor_name').on( 'keyup', function () {
         motorized_table.column(2).search( this.value ).draw();
     });
-    $('#txtdate').on( 'change', function () {
+    $('#txtdate').on( 'keyup', function () {
         motorized_table.column(3).search( this.value ).draw();
     });
 

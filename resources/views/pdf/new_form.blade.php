@@ -55,6 +55,7 @@
 
 	.con_list li{
 		margin: 20px 0;
+		text-align: justify;
 	}
 
 	.pl-40 {
@@ -80,6 +81,10 @@
 
 	.indent {
 		text-indent: 40px;
+	}
+
+	.justify {
+		text-align: justify;
 	}
 
 </style>
@@ -162,8 +167,18 @@
 
  	<br>
 
- 	<p class="right bold capital underline">{{ $data['vice_mayor']}}</p>
- 	<p class="right pr-20"> Municipal Vice Mayor</p>
+ 	<table style="width: 100%">
+ 		<tr>
+ 			<td style="width:33%"></td>
+ 			<td style="width:33%"></td>
+ 			
+ 			<td style="width:33%">
+ 				<p class="center bold capital ">{{ $data['vice_mayor']}}</p>
+ 				<p class="center" style="border-top: 2px solid #000"> Municipal Vice Mayor</p>
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	
 
  	<br>
 
@@ -209,11 +224,11 @@
 		<u>n</u> 	
 	 </p>
 	<br>
-	<p class="indent pad">Comes now the applicant and unto this Honorable Board most respectfully alleges; That applicant is legal age of <u>{{$data['age']}} YRS. OLD</u>  Filipino Citizen and a residents of , <u>{{ $data['address'] }}</u>  </p>
+	<p class="indent pad justify">Comes now the applicant and unto this Honorable Board most respectfully alleges; That applicant is legal age of <u>{{$data['age']}} YRS. OLD</u>  Filipino Citizen and a residents of , <u>{{ $data['address'] }}</u>  </p>
 
 	<br>
 
-	<p class="indent pad">That applicant propose to avail of Memorandum Circular No. 88 – 006, dated January 7, 1988, Legalization of Motorized Tricycle Service to operate within the Municipality of San Quintin, Pangasinan with the use of the following unit: </p>
+	<p class="indent pad justify">That applicant propose to avail of Memorandum Circular No. 88 – 006, dated January 7, 1988, Legalization of Motorized Tricycle Service to operate within the Municipality of San Quintin, Pangasinan with the use of the following unit: </p>
 
 	<br>
 
@@ -238,27 +253,36 @@
 
 	<br>
 
-	<p class="indent">That applicant is financially capable to operate and maintain the service herein applied   for :</p>
+	<p class="indent justify">That applicant is financially capable to operate and maintain the service herein applied   for :</p>
+
+
+	<p class="indent pad justify">That public convenience and necessity will be served in a most and suitable manner with the legalization of this service;</p>
 
 	<br>
 
-	<p class="indent pad">That public convenience and necessity will be served in a most and suitable manner with the legalization of this service;</p>
+	<p class="indent pad justify">That applicant will comply with the rules and regulations of the Honorable Board the herein application be approved ad granted a Provisional Authority. San Quintin, Pangasinan, Philippines,  {{ $data['date_issued']}}</p>
 
 	<br>
 
-	<p class="indent pad">That applicant will comply with the rules and regulations of the Honorable Board the herein application be approved ad granted a Provisional Authority. San Quintin, Pangasinan, Philippines,  {{ $data['date_issued']}}</p>
-
-	<br>
-
- 	<p class="right bold capital underline">{{ $data['operator_name']}}</p>
- 	<p class="right pr-20">Signature of Applicant</p>
+ 	<table style="width: 100%">
+ 		<tr>
+ 			<td style="width:33%"></td>
+ 			<td style="width:33%"></td>
+ 			
+ 			<td style="width:33%">
+ 				<p class="center bold capital ">{{ $data['operator_name']}}</p>
+ 				<p class="center" style="border-top: 2px solid #000">Signature of Applicant</p>
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	
 
 
  	<br>
 
  	<p class="center capital let-space"> verification</p>
 
- 	<p class="indent pad"> I <el class="bold capital">{{$data['operator_name']}}</el> , after having been duly sworn to in accordance with law hereby depose and state: that I caused the preparation of the above- application; that I have read and understood its contents; and that the contents thereof are true and correct on my own personal knowledge and belief. <br><i>( mcs file )</i></p>
+ 	<p class="indent pad justify"> I <el class="bold capital">{{$data['operator_name']}}</el> , after having been duly sworn to in accordance with law hereby depose and state: that I caused the preparation of the above- application; that I have read and understood its contents; and that the contents thereof are true and correct on my own personal knowledge and belief. <br><i>( mcs file )</i></p>
 
 </body>
 </html>
