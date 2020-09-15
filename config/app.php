@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'motorized_form_url' => env('MOTORIZED_FORM_URL', 'http://localhost/sb/public'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

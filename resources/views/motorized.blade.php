@@ -263,7 +263,9 @@
 
                 alert('Data successfully saved. You can input data continously');
 
-                var win = window.open(`http://${window.location.hostname}${data}`, '_blank');
+                var hostname = "{{ config('app.motorized_form_url') }}";
+
+                var win = window.open(`${hostname}${data}`, '_blank');
                 if (win) {
                     //Browser has allowed it to be opened
                     win.focus();
