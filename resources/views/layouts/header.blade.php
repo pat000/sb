@@ -181,6 +181,9 @@
             </div>
             
             @yield('content')
+
+
+            @yield('modal')
         </div>
         {{-- <script> --}}
             <script type='text/javascript'>

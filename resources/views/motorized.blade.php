@@ -83,8 +83,11 @@
 
 </div>
 
-@include('new_motorized')    
-@include('edit_motorized')
+@endsection
+
+@section('modal')
+  @include('new_motorized')    
+  @include('edit_motorized')
 @endsection
 
 

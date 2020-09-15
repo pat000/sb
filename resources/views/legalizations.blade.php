@@ -83,12 +83,12 @@
       
     </div>
 </div>
-
-@include('new_legalization')
-@include('edit_legalization') 
-
 </div>
+@endsection
 
+@section('modal')
+  @include('new_legalization')
+  @include('edit_legalization') 
 @endsection
 
 @section('js-custom')

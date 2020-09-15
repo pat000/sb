@@ -87,10 +87,13 @@
 
 
 </div>
-@include('edit_ordinance')
-@include('new_ordinance')    
+
 @endsection
 
+@section('modal')
+  @include('edit_ordinance')
+  @include('new_ordinance')   
+@endsection
 
 @section('js-custom')
 <script type="text/javascript">
@@ -153,7 +156,17 @@
 
         columns: [
             {data: 'ordinance_number', name: 'ordinance_number'},
-            {data: 'title', name: 'title'},
+            {   
+                "data":"title",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('width', '25%');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return full.title;
+                  }
+            },
             {data: 'date_approved', name: 'date_approved'},
             {   
                 "data":"status",
