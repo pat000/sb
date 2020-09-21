@@ -94,15 +94,15 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element">
+                        <div class="dropdown profile-element text-center">
                             <img alt="image" class="rounded-circle" style='width:48px;height:48px;' src="{{asset('images/front-logo.png')}}"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">{{Auth::user()->name}}</span>
-                                <span class="text-muted text-xs block">{{Auth::user()->email}} <b class="caret"></b></span>
+                                <span class="block m-t-xs font-bold">{{Auth::user()->name}} <b class="caret"></b></span>
+                                <span class="text-muted text-xs block">{{Auth::user()->email}} </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 {{-- <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li> --}}
-                                <li class="dropdown-divider"></li>
+                                {{-- <li class="dropdown-divider"></li> --}}
                                 <li><a class="dropdown-item" href="{{ route('logout') }}"  onclick="logout(); show();">Logout</a></li>
                             </ul>
                         </div>

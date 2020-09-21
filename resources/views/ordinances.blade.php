@@ -109,16 +109,22 @@
         buttons: [
 
                 {extend: 'csv'},
-                {extend: 'excel', title: 'ExampleFile'},
-                {extend: 'pdf', title: 'ExampleFile'},
-                
+                {extend: 'excel', title: '{{config('app.name')}} - Ordinances'},
+                {extend: 'pdf',
+                  exportOptions: {
+                      columns: [ 0, 2, 1 ,3, 4, 6]
+                  },
+                  "ShowAll": true,
+                  "oSelectorOpts": { filter: 'all', order: 'current' },
+                  title: '{{config('app.name')}} - Ordinances'
+                },
                 {
                     extend: 'print',
                     exportOptions: {
                         columns: [ 0, 2, 1 ,3, 4, 6]
                     },
-                    "bShowAll": true,
-                    "oSelectorOpts": { filter: 'all', order: 'current' },
+                    ShowAll: true,
+                    SelectorOpts: { filter: 'all', order: 'current' },
                     title : '{{config('app.name')}} - Ordinances',
                     
                     customize: function (win)
@@ -155,7 +161,17 @@
         }],
 
         columns: [
-            {data: 'ordinance_number', name: 'ordinance_number'},
+            {   
+                "data":"ordinance_number",
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('width', '5%');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return full.ordinance_number;
+                  }
+            },
             {   
                 "data":"title",
                  "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)

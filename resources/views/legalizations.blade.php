@@ -106,8 +106,14 @@
 
                 {extend: 'csv'},
                 {extend: 'excel', title: 'ExampleFile'},
-                {extend: 'pdf', title: 'ExampleFile'},
-                
+                {extend: 'pdf',
+                  exportOptions: {
+                      columns: [ 0, 2, 1 ,3, 4, 6]
+                  },
+                  "ShowAll": true,
+                  "oSelectorOpts": { filter: 'all', order: 'current' },
+                  title: '{{config('app.name')}} - Ordinances'
+                },
                 {
                     extend: 'print',
                     exportOptions: {

@@ -116,10 +116,10 @@
 
 	<table style="width: 100%">
 		<tr>
-			<td style="width: 25%"><p class="bold underline capital left p-12">NAME</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">motor no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">chassis no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">plate no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">NAME</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">motor no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">chassis no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">plate no.</p></td>
 		</tr>
 		<tr>
 			<td><p class="bold left p-12 ">{{$data['motor_name']}}</p></td>
@@ -186,7 +186,7 @@
  	<p class="left pl-40"> Applicant: <u class="bold">{{ $data['operator_name']}}</u></p>
  	<p class="left pl-40"> ADDRESS: {{ $data['address']}}</p>
  	<p class="left pl-40">The registrar, LTO, San Quintin, Pangasinan</p>
- 	<p class="left pl-40"> <i>(  mcs file )</i></p>
+
 
  	<div class="page-break">
  	</div>
@@ -234,10 +234,10 @@
 
 	<table style="width: 100%">
 		<tr>
-			<td style="width: 25%"><p class="bold underline capital left p-12">NAME</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">motor no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">chassis no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left p-12">plate no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">NAME</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">motor no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">chassis no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital left ">plate no.</p></td>
 		</tr>
 		<tr>
 			<td><p class="bold left p-12 ">{{$data['motor_name']}}</p></td>
@@ -282,7 +282,7 @@
 
  	<p class="center capital let-space"> verification</p>
 
- 	<p class="indent pad justify"> I <el class="bold capital">{{$data['operator_name']}}</el> , after having been duly sworn to in accordance with law hereby depose and state: that I caused the preparation of the above- application; that I have read and understood its contents; and that the contents thereof are true and correct on my own personal knowledge and belief. <br><i>( mcs file )</i></p>
+ 	<p class="indent pad justify"> I <el class="bold capital">{{$data['operator_name']}}</el> , after having been duly sworn to in accordance with law hereby depose and state: that I caused the preparation of the above- application; that I have read and understood its contents; and that the contents thereof are true and correct on my own personal knowledge and belief.</p>
 
 </body>
 </html>
