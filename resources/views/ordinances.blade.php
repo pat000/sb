@@ -200,7 +200,7 @@
                  "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
                   {
                       $(nTd).css('text-align', 'left');
-                      $(nTd).css('width', '15%');
+                      $(nTd).css('width', '20%');
                   },
                   "mRender": function( data, type, full ,meta) {
 

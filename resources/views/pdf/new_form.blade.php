@@ -163,7 +163,7 @@
 
  	<br>
 
- 	<p class="left pl-40">ENTERED, San Quintin, Pangasinan, Philippines,  <u class="capital bold">{{$data['date_issued']}}</u></p>
+ 	<p class="left pl-40">ENTERED, San Quintin, Pangasinan, Philippines,  <u class=" bold">{{$data['date_issued']}}</u></p>
 
  	<br>
 

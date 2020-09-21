@@ -107,7 +107,25 @@
 
                 {extend: 'csv'},
                 {extend: 'excel', title: 'ExampleFile'},
-                {extend: 'pdf', title: 'ExampleFile'},
+                 {extend: 'pdf',
+                  exportOptions: {
+                      columns: [ 0, 1, 2 ,3, 4]
+                  },
+                  "ShowAll": true,
+                  "oSelectorOpts": { filter: 'all', order: 'current' },
+                  title: '{{config('app.name')}} - Legalizations',
+                  customize : function(doc) {
+
+                    doc.content.splice(0,1);
+                   
+                    doc.pageMargins = [20,20];
+                    doc.defaultStyle.fontSize = 8;
+                    doc.styles.tableHeader.fontSize = 9;
+                    doc.styles.tableFooter.fontSize = 8;
+                    doc.styles.title.fontSize = 9;
+                  }
+
+                },
                 
                 {
                     extend: 'print',
