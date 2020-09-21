@@ -123,9 +123,9 @@
                    
                     doc.pageMargins = [20,20];
                     doc.defaultStyle.fontSize = 8;
-                    doc.styles.tableHeader.fontSize = 9;
+                    doc.styles.tableHeader.fontSize = 10;
                     doc.styles.tableFooter.fontSize = 8;
-                    doc.styles.title.fontSize = 9;
+                    doc.styles.title.fontSize = 10;
                   }
 
                 },
