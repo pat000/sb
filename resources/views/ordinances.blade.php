@@ -116,7 +116,18 @@
                   },
                   "ShowAll": true,
                   "oSelectorOpts": { filter: 'all', order: 'current' },
-                  title: '{{config('app.name')}} - Ordinances'
+                  title: '{{config('app.name')}} - Ordinances',
+                  customize : function(doc) {
+
+                    doc.content.splice(0,1);
+                   
+                    doc.pageMargins = [20,20];
+                    doc.defaultStyle.fontSize = 8;
+                    doc.styles.tableHeader.fontSize = 9;
+                    doc.styles.tableFooter.fontSize = 8;
+                    doc.styles.title.fontSize = 9;
+                  }
+
                 },
                 {
                     extend: 'print',
