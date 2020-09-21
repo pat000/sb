@@ -101,9 +101,9 @@ class MotorizedController extends Controller
         $data['motor_chassic'] = $info['motor_chassic'];
         $data['plate_number'] = $info['plate_number'];
 
-        $data['date_issued'] = date("M d, Y",strtotime($info['date_issued']));
+        $data['date_issued'] = date("F d, Y",strtotime($info['date_issued']));
 
-        $data['date_expi'] = date("M d, Y",strtotime($info['date_issued'].'+3 years') );
+        $data['date_expi'] = date("F d, Y",strtotime($info['date_issued'].'+3 years') );
 
         $data['vice_mayor'] = $info['vice_mayor'];
         $data['age'] = $info['age'];
