@@ -77,6 +77,18 @@
                            <input class='form-control' type='number' name='age' required>
                         </div>
                     </div>
+
+                    <div class="row">
+
+                        <div class=' form-group col-md-4'>
+                           <label>Or No.  <small class="text-white">(Optional)</small></label>
+                           <input class='form-control' type='text' name='or_no' >
+                        </div>
+                        <div class=' form-group col-md-4'>
+                           <label>Date issued  <small class="text-white">(Optional)</small></label>
+                           <input class='form-control' type='date' name='date_or' >
+                        </div>
+                    </div>
                     
                     
                 </div>

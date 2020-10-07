@@ -105,7 +105,7 @@
         buttons: [
 
                 {extend: 'csv'},
-                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'excel', title: '{{config('app.name')}} - Resolutions'},
                 {extend: 'pdf',
                   exportOptions: {
                       columns: [ 0, 2, 1 ,3, 4, 6]

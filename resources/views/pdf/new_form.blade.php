@@ -96,7 +96,19 @@
 
 	<br>
 
-	<p class="right p-11">CASE NO. TC-SQ, PANG <u>{{ $data['case_no'] }}</u></p>
+	<table style="width: 100%" >
+ 		<tr>
+ 			<td style="width:30%"></td>
+ 			<td style="width:28%"></td>
+ 			
+ 			<td style="width:40%">
+ 				<p class="left p-11">CASE NO. TC-SQ, PANG <u>{{ $data['case_no'] }}</u></p>
+ 				<p class="left  capital ">OR NO.: <u>{{ $data['or_no']}}</u></p>
+ 				<p class="left " >DATE ISSUED: <u>{{ $data['date_or'] }}</p>
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	
 
 	<br>
 
@@ -114,18 +126,18 @@
 
 	<br>
 
-	<table style="width: 100%">
+	<table style="width: 100%" cellpadding="3" >
 		<tr>
-			<td style="width: 25%"><p class="bold underline capital left ">NAME</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">motor no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">chassis no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">plate no.</p></td>
+			<td style="width: 20%"><p class="bold underline capital center ">NAME</p></td>
+			<td style="width: 25%"><p class="bold underline capital center ">motor no.</p></td>
+			<td style="width: 30%"><p class="bold underline capital center ">chassis no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital center ">plate no.</p></td>
 		</tr>
 		<tr>
-			<td><p class="bold left p-12 ">{{$data['motor_name']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['motor_number']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['motor_chassic']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['plate_number']}}</p></td>
+			<td><p class="bold center">{{$data['motor_name']}}</p></td>
+			<td><p class="bold center">{{$data['motor_number']}}</p></td>
+			<td><p class="bold center">{{$data['motor_chassic']}}</p></td>
+			<td><p class="bold center">{{$data['plate_number']}}</p></td>
 		</tr>
 	</table>
 
@@ -232,18 +244,18 @@
 
 	<br>
 
-	<table style="width: 100%">
+	<table style="width: 100%" cellpadding="3" >
 		<tr>
-			<td style="width: 25%"><p class="bold underline capital left ">NAME</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">motor no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">chassis no.</p></td>
-			<td style="width: 25%"><p class="bold underline capital left ">plate no.</p></td>
+			<td style="width: 20%"><p class="bold underline capital center ">NAME</p></td>
+			<td style="width: 25%"><p class="bold underline capital center ">motor no.</p></td>
+			<td style="width: 30%"><p class="bold underline capital center ">chassis no.</p></td>
+			<td style="width: 25%"><p class="bold underline capital center ">plate no.</p></td>
 		</tr>
 		<tr>
-			<td><p class="bold left p-12 ">{{$data['motor_name']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['motor_number']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['motor_chassic']}}</p></td>
-			<td><p class="bold left p-12 ">{{$data['plate_number']}}</p></td>
+			<td><p class="bold center">{{$data['motor_name']}}</p></td>
+			<td><p class="bold center">{{$data['motor_number']}}</p></td>
+			<td><p class="bold center">{{$data['motor_chassic']}}</p></td>
+			<td><p class="bold center">{{$data['plate_number']}}</p></td>
 		</tr>
 	</table>
 

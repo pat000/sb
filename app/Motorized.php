@@ -12,6 +12,7 @@ class Motorized extends Model
 
     protected $attributes = [
        'signed_form' => '',
+       'date_or' => null,
     ];
 
     protected $appends = array(

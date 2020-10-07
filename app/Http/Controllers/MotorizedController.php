@@ -76,6 +76,9 @@ class MotorizedController extends Controller
         $motorized->vice_mayor = strtoupper($request->vice_mayor);
         $motorized->age =   strtoupper($request->age);
 
+        $motorized->or_no = strtoupper($request->or_no);
+        $motorized->date_or =  ($request->filled('date_or')) ? strtoupper($request->input('date_or')) : null;
+
         $motorized->save();
 
         $this->saveForm($motorized);
@@ -107,6 +110,9 @@ class MotorizedController extends Controller
 
         $data['vice_mayor'] = $info['vice_mayor'];
         $data['age'] = $info['age'];
+
+        $data['or_no'] = $info['or_no'];
+        $data['date_or'] = ($info['date_or']) ? date("F d, Y",strtotime($info['date_or'])) : '';
 
         $pdf = \PDF::loadView('pdf.new_form' , compact('data'));
         $pdf->setPaper('legal');
@@ -180,6 +186,8 @@ class MotorizedController extends Controller
             $motorized->vice_mayor = strtoupper($request->vice_mayor);
             $motorized->age =   strtoupper($request->age);
 
+            $motorized->or_no = strtoupper($request->or_no);
+            $motorized->date_or =  ($request->filled('date_or')) ? strtoupper($request->input('date_or')) : null;
 
             $attachment = $request->signed_form;
 
