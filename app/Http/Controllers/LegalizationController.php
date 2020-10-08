@@ -29,12 +29,13 @@ class LegalizationController extends Controller
 
     public function getLegalizations(){
 
-        $legalizations = Legalization::join('categories' , 'legalizations.category_id' , '=' , 'categories.id')
+        $legalizations = \DB::table('legalizations')->join('categories' , 'legalizations.category_id' , '=' , 'categories.id')
                         ->select('legalizations.*' , 'categories.name');
 
         return Datatables::of($legalizations)
-                ->editColumn('legalization_number', '{{$legalization_number}}')
-                ->setRowId('legalization_number')
+                ->orderColumn('legalization_number', \DB::raw('LENGTH(legalization_number), legalization_number') . ' $1')
+                ->editColumn('id', '{{$id}}')
+                ->setRowId('id')
                 ->make(true);
     }
 

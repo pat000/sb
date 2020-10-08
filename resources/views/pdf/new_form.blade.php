@@ -99,9 +99,9 @@
 	<table style="width: 100%" >
  		<tr>
  			<td style="width:30%"></td>
- 			<td style="width:28%"></td>
+ 			<td style="width:20%"></td>
  			
- 			<td style="width:40%">
+ 			<td style="width:45%">
  				<p class="left p-11">CASE NO. TC-SQ, PANG <u>{{ $data['case_no'] }}</u></p>
  				<p class="left  capital ">OR NO.: <u>{{ $data['or_no']}}</u></p>
  				<p class="left " >DATE ISSUED: <u>{{ $data['date_or'] }}</p>
@@ -172,8 +172,6 @@
  	<br>
 
  	<p class="capital left pl-40">SO ORDERED.</p>
-
- 	<br>
 
  	<p class="left pl-40">ENTERED, San Quintin, Pangasinan, Philippines,  <u class=" bold">{{$data['date_issued']}}</u></p>
 

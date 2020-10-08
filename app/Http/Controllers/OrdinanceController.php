@@ -24,7 +24,7 @@ class OrdinanceController extends Controller
 
     public function getOrdinances(){
 
-        $ordinances = Ordinance::join('categories' , 'ordinances.category_id' , '=' , 'categories.id')
+        $ordinances = \DB::table('ordinances')->join('categories' , 'ordinances.category_id' , '=' , 'categories.id')
                         ->select('ordinances.*' , 'categories.name');
 
         return Datatables::of($ordinances)

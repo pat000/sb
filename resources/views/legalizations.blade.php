@@ -93,7 +93,7 @@
 
 @section('js-custom')
 <script type="text/javascript">
-    var legalization_table = $('#tbllegalizations').DataTable({
+  var legalization_table = $('#tbllegalizations').DataTable({
         lengthMenu: [[10, 25, 50,-1], [10, 25, 50,"All"]],
         responsive: true,
         searching: true,
@@ -168,7 +168,26 @@
         }],
 
         columns: [
-            {data: 'legalization_number', name: 'legalization_number'},
+            // {
+            //     data: 'legalization_number',
+            //     type: 'numeric',
+            //     name: 'legalization_number',
+            //     "orderDataType": "dom-text",
+                
+            // },
+
+            {   
+                "data":"legalization_number",
+                type: 'numeric',
+                 "fnCreatedCell": function(nTd, sData, oData, iRow, iCol)
+                  {
+                      $(nTd).css('text-align', 'left');
+                  },
+                  "mRender": function( data, type, full ,meta) {
+
+                        return full.legalization_number;
+                  }
+            },
             {data: 'title', name: 'title'},
             {data: 'date_approved', name: 'date_approved'},
             {   
@@ -238,7 +257,8 @@
                   }
             },
 
-        ]
+        ],
+        columnDefs: [ { targets: 0, type: 'natural' } ] 
     });
     
     $('#btn-new').on( 'click', function () {

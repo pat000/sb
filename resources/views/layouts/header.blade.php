@@ -276,10 +276,9 @@
                 <script src="{{ asset('bootstrap/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
                 
                 <script src="{{ asset('bootstrap/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
-                <script>
-                    
-                </script>
-
+                
+                
+                {{-- <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.21/sorting/natural.js"></script> --}}
                 @yield('js-custom')
             </body>
             </html>
